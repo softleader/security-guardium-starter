@@ -1,2 +1,4 @@
 # security-guardium-starter
-secure service w/ IBM Security Guardium
+
+Secure service w/ IBM Security Guardium
+
