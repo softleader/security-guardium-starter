@@ -19,6 +19,7 @@ import tw.com.softleader.boot.security.guardium.IBMSecurityGuardium10GuardAppEve
 import tw.com.softleader.util.StringUtils;
 
 import javax.sql.DataSource;
+import java.util.Collections;
 import java.util.HashMap;
 
 @Configuration
@@ -59,8 +60,8 @@ public class SecurityGuardiumAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(EventDataSupplier.class)
-  public EventDataSupplier noOpDataSupplier() {
-    return (target, args) -> new HashMap<>();
+  public EventDataSupplier emptyDataSupplier() {
+    return (target, args) -> Collections.unmodifiableMap(new HashMap<>());
   }
 
   @Bean
