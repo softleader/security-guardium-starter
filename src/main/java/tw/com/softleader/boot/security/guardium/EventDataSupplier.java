@@ -29,6 +29,13 @@ public interface EventDataSupplier {
     return proxy::apply;
   }
 
+  /**
+   * 取得要寫入 IBM Security Guardium 的資料
+   *
+   * @param method 當前執行的 method
+   * @param args 當前 method 的 input 變數
+   * @return
+   */
   Map<String, String> get(Method method, Object[] args);
 
   /**
