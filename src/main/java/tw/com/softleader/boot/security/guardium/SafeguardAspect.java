@@ -9,7 +9,11 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 import java.lang.reflect.Method;
 
-/** @author matt */
+/**
+ * {@link tw.com.softleader.boot.security.guardium.annotation.Safeguard} 的 aop Aspect
+ *
+ * @author matt
+ */
 @Aspect
 @RequiredArgsConstructor
 public class SafeguardAspect {

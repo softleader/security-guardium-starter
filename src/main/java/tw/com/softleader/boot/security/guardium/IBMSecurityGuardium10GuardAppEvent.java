@@ -7,6 +7,11 @@ import org.springframework.jdbc.core.JdbcOperations;
 
 import java.lang.reflect.Method;
 
+/**
+ * IBM Security Guardium 10 的實作
+ *
+ * @author matt
+ */
 @Slf4j
 @RequiredArgsConstructor
 public class IBMSecurityGuardium10GuardAppEvent implements GuardAppEvent {

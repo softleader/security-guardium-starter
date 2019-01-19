@@ -3,9 +3,9 @@ package tw.com.softleader.boot.security.guardium;
 import java.lang.reflect.Method;
 
 /**
+ * GuardAppEvent 也就是 IBM Security Guardium 的一個 event
+ *
  * @author matt
- * @see <a
- *     href="https://www.ibm.com/support/knowledgecenter/en/SSMPHH_9.5.0/com.ibm.guardium95.doc/monitor_audit/topics/identify_users_via_api.html">https://www.ibm.com/support/knowledgecenter/en/SSMPHH_9.5.0/com.ibm.guardium95.doc/monitor_audit/topics/identify_users_via_api.html</a>
  */
 public interface GuardAppEvent {
   /**

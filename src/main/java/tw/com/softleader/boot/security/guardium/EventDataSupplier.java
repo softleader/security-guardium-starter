@@ -8,7 +8,11 @@ import java.util.function.BiFunction;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-/** EventDataSupplier 提供 GuardAppEvent 在 runtime 每次呼叫取用 */
+/**
+ * EventDataSupplier 提供 {@link GuardAppEvent} 在 runtime 每次呼叫取用
+ *
+ * @author matt
+ */
 public interface EventDataSupplier {
 
   /**

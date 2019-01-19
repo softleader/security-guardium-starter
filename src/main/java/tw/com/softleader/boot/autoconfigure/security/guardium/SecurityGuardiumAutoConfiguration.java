@@ -22,6 +22,7 @@ import javax.sql.DataSource;
 import java.util.Collections;
 import java.util.HashMap;
 
+/** @author matt */
 @Configuration
 @EnableConfigurationProperties(SecurityGuardiumProperties.class)
 @ComponentScan(basePackageClasses = SecurityGuardiumAutoConfiguration.class)
