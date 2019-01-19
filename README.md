@@ -61,7 +61,7 @@ public EventDataSupplier eventDataSupplier(@Autowired JasmineUsernameSupplier su
 }
 ```
 
-> 但老實說, `UsernameIpEventDataSupplier ` 其實是依照兆豐的需求而定的 :/
+> 但實際上, `UsernameIpEventDataSupplier ` 其實是依照兆豐的需求而定的 :/
 
 ## How to use
 
