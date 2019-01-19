@@ -11,7 +11,16 @@ import java.util.stream.Collectors;
 /** EventDataSupplier 提供 GuardAppEvent 在 runtime 每次呼叫取用 */
 public interface EventDataSupplier {
 
-  // 提供一個方式讓 proxy java 原生的 api, 方便共用的 class 開在 softleader-product/softleader-jasmine-commons
+  /**
+   * 整合 java 原生的 interface: {@link BiFunction}
+   *
+   * <p>目的是因為有些共用的 class (如開在 softleader-product/softleader-jasmine-config) 可以輕易地透過實作 java interface
+   * 再 proxy 到此專案
+   *
+   * @see BiFunction
+   * @param proxy
+   * @return
+   */
   static EventDataSupplier proxy(BiFunction<Method, Object[], Map<String, String>> proxy) {
     return proxy::apply;
   }

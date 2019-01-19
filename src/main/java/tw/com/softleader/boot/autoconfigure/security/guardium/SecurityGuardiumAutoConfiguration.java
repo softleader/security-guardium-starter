@@ -60,7 +60,7 @@ public class SecurityGuardiumAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(EventDataSupplier.class)
-  public EventDataSupplier emptyDataSupplier() {
+  public EventDataSupplier emptyEventDataSupplier() {
     return (target, args) -> Collections.unmodifiableMap(new HashMap<>());
   }
 
