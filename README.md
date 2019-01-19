@@ -70,6 +70,6 @@ public EventDataSupplier eventDataSupplier(@Autowired JasmineUsernameSupplier su
 ```java
 @Safeguard
 public void hello() {
-  // no-op
+  // ...
 }
 ```
