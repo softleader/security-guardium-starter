@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,14 +15,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import tw.com.softleader.boot.security.guardium.EventDataSupplier;
 import tw.com.softleader.boot.security.guardium.GuardAppEvent;
 import tw.com.softleader.boot.security.guardium.SafeguardAspect;
-import tw.com.softleader.boot.security.guardium.IBMSecurityGuardium9GuardAppEvent;
+import tw.com.softleader.boot.security.guardium.IBMSecurityGuardium10GuardAppEvent;
 import tw.com.softleader.util.StringUtils;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.function.Supplier;
 
 @Configuration
 @EnableConfigurationProperties(SecurityGuardiumProperties.class)
@@ -40,7 +36,7 @@ public class SecurityGuardiumAutoConfiguration {
   @ConditionalOnMissingBean(GuardAppEvent.class)
   @ConditionalOnProperty(
       name = "softleader.security.guardium.version",
-      havingValue = "9",
+      havingValue = SecurityGuardiumProperties.VERSION_10,
       matchIfMissing = true)
   public GuardAppEvent guardAppEvent(@Autowired EventDataSupplier supplier) {
     String dataSourceRef = properties.getDataSourceRef();
@@ -50,7 +46,7 @@ public class SecurityGuardiumAutoConfiguration {
     log.info(
         "Retrieving dataSource bean '{}' for initialize '{}'",
         dataSourceRef,
-        IBMSecurityGuardium9GuardAppEvent.class);
+        IBMSecurityGuardium10GuardAppEvent.class);
     DataSource ds = factory.getBean(dataSourceRef, DataSource.class);
     JdbcTemplate template = new JdbcTemplate(ds);
     int timeout = properties.getQueryTimeoutSecond();
@@ -58,7 +54,7 @@ public class SecurityGuardiumAutoConfiguration {
       log.info("setting sql statement query timeout for {} seconds", timeout);
       template.setQueryTimeout(timeout);
     }
-    return new IBMSecurityGuardium9GuardAppEvent(template, supplier, properties.isLogException());
+    return new IBMSecurityGuardium10GuardAppEvent(template, supplier);
   }
 
   @Bean

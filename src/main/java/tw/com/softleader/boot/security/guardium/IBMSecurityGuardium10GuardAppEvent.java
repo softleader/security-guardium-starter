@@ -9,14 +9,13 @@ import java.lang.reflect.Method;
 
 @Slf4j
 @RequiredArgsConstructor
-public class IBMSecurityGuardium9GuardAppEvent implements GuardAppEvent {
+public class IBMSecurityGuardium10GuardAppEvent implements GuardAppEvent {
 
   private static final String EVENT_START = "GuardAppEvent:Start";
   private static final String EVENT_RELEASED = "GuardAppEvent:Released";
 
   @NonNull private final JdbcOperations jdbcOperations;
   @NonNull private final EventDataSupplier eventDataSupplier;
-  private final boolean enableExceptionLog;
 
   @Override
   public void start(Method method, Object[] args) {
@@ -26,9 +25,7 @@ public class IBMSecurityGuardium9GuardAppEvent implements GuardAppEvent {
       log.trace("Setting an application event: {}", sql);
       jdbcOperations.execute(sql);
     } catch (Exception e) {
-      if (enableExceptionLog) {
-        log.error(EVENT_START, e);
-      }
+      log.error(EVENT_START, e);
     }
   }
 
@@ -39,9 +36,7 @@ public class IBMSecurityGuardium9GuardAppEvent implements GuardAppEvent {
       log.trace("Clearing an application event: {}", sql);
       jdbcOperations.execute(sql);
     } catch (Exception e) {
-      if (enableExceptionLog) {
-        log.error(EVENT_RELEASED, e);
-      }
+      log.error(EVENT_RELEASED, e);
     }
   }
 }
