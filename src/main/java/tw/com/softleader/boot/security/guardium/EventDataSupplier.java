@@ -34,7 +34,7 @@ public interface EventDataSupplier {
    *
    * @param method 被 AOP 攔截的 method
    * @param args 被 AOP 攔截 method 的 input 參數
-   * @return
+   * @return data to write to IBM Security Guardium, key=欄位名稱, value=值
    */
   Map<String, String> get(Method method, Object[] args);
 
