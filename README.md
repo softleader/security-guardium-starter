@@ -18,7 +18,7 @@ Secure service w/ IBM Security Guardium
 
 ## How to setup
 
-因此首先我們須在要 `pom.xml` 加入 starter:
+首先我們須在要 `pom.xml` 加入 starter:
 
 ```xml
 <dependency>
@@ -52,7 +52,7 @@ public class SomeConfiguration {
 - `method` - 被 AOP 攔截的 method
 - `args` - 被 AOP 攔截 method 的 input 參數
 
-如果你的專案有依賴 `softleader-product/softleader-jasmine-config` 那就更簡單了, 直接使用 `UsernameIpEventDataSupplier` 即可:
+如果你的專案有依賴 [softleader-product/softleader-jasmine-config](https://github.com/softleader-product/softleader-jasmine-config) 那就更簡單了, 直接使用 [UsernameIpEventDataSupplier](https://github.com/softleader-product/softleader-jasmine-config/blob/master/src/main/java/tw/com/softleader/jasmine/security/guardium/UsernameIpEventDataSupplier.java) 即可:
 
 ```java
 @Bean
