@@ -2,14 +2,6 @@
 
 Secure service w/ IBM Security Guardium
 
-```xml
-<dependency>
-    <groupId>tw.com.softleader</groupId>
-    <artifactId>security-guardium-starter</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-</dependency>
-```
-
 ## Properteis
 
 - `softleader.security.guardium.version` - 設定客戶使用的 IBM Security Guardium 版本, IBM Security Guardium 版本目前有 8, 9 跟 10 這幾個大版本, 不確定差異在哪, 但目前第一家客戶 (CKI) 使用的是 10, 因此我們先提供 10 的實作, 當然, 我們現在也就只有 10 的實作 (defualt: `10`)
