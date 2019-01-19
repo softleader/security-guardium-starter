@@ -43,6 +43,7 @@ public class SomeConfiguration {
     			data.put(...); // 放入要寫的 data
                    		       // data 應該是要每次 runtime 才取, 例如呼叫另一個 class 取得資料
                     		       // 而非直接 hard code 在這邊
+			return data;
 	    }
 	}
 }
