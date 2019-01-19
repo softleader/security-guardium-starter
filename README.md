@@ -52,7 +52,7 @@ public class SomeConfiguration {
 - `method` - 被 AOP 攔截的 method
 - `args` - 被 AOP 攔截 method 的 input 參數
 
-如果你的專案有依賴 `softleader-product/softleader-jasmine-config` 那就夠簡單了, 直接使用 `UsernameIpEventDataSupplier` 就好了:
+如果你的專案有依賴 `softleader-product/softleader-jasmine-config` 那就更簡單了, 直接使用 `UsernameIpEventDataSupplier` 就好了:
 
 ```java
 @Bean
