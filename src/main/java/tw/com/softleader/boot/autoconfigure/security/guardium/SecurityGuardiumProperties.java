@@ -3,10 +3,6 @@ package tw.com.softleader.boot.autoconfigure.security.guardium;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import tw.com.softleader.boot.security.guardium.EventDataSupplier;
-
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 
 /** @author matt */
 @Getter
@@ -16,6 +12,7 @@ public class SecurityGuardiumProperties {
 
   static final String VERSION_10 = "10";
   private static final int DEFAULT_QUERY_TIMEOUT_SECOND = -1;
+  private static final String DEFAULT_DATA_SOURCE_REF = "dataSource";
 
   /**
    * 設定客戶使用的 IBM Security Guardium 版本
@@ -36,5 +33,5 @@ public class SecurityGuardiumProperties {
    */
   private int queryTimeoutSecond = DEFAULT_QUERY_TIMEOUT_SECOND;
 
-  private String dataSourceRef;
+  private String dataSourceRef = DEFAULT_DATA_SOURCE_REF;
 }
