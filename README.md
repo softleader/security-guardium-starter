@@ -40,7 +40,7 @@ public class SomeConfiguration {
 	public EventDataSupplier eventDataSupplier(
 		return (method, args) -> {
 			Map<String, String> data = new LinkedHashMap<>();
-			data.put(...) // put your runtime data here..
+			data.put(...) // 放入要寫的 data, data 應該是要每次 runtime 才取, 而非直接 hard code 在這邊
 			return data;
 	    }
 	}
