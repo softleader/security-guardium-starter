@@ -33,5 +33,8 @@ public class SecurityGuardiumProperties {
    */
   private int queryTimeoutSecond = DEFAULT_QUERY_TIMEOUT_SECOND;
 
+  /**
+   * 設定 dataSource bean 名稱
+   */
   private String dataSourceRef = DEFAULT_DATA_SOURCE_REF;
 }
