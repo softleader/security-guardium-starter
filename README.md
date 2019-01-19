@@ -30,7 +30,7 @@ Secure service w/ IBM Security Guardium
 
 此 Starter 預設啟動的 IBM Security Guardium 實作為版本 10, 實作為 `tw.com.softleader.boot.security.guardium.IBMSecurityGuardium10GuardAppEvent`
 
-在 `IBMSecurityGuardium10GuardAppEvent` 中, 會透過 `tw.com.softleader.boot.security.guardium.EventDataSupplier` 來取得每一次要寫入 IBM Security Guardium 的 runtime 資料, 因此使用的專案必須要提供 `EventDataSupplier` 實作:
+在 `IBMSecurityGuardium10GuardAppEvent` 中, 會透過 `tw.com.softleader.boot.security.guardium.EventDataSupplier` 來取得每一次要寫入 IBM Security Guardium 的 runtime 資料, 因此使用的專案必須要提供 `EventDataSupplier` 的實作:
 
 ```java
 @Configuration
@@ -39,7 +39,7 @@ public class SomeConfiguration {
 	@Bean
 	public EventDataSupplier eventDataSupplier(
 		return (method, args) -> {
-			Map<String, String> data = new LinkedHashMap<>();
+			Map<String, String> data = new LinkedHashMap<>(); // key=欄位名稱, value=值
     			data.put(...); // 放入要寫的 data
                    		       // data 應該是要每次 runtime 才取, 例如呼叫另一個 class 取得資料
                     		       // 而非直接 hard code 在這邊
@@ -61,7 +61,7 @@ public EventDataSupplier eventDataSupplier(@Autowired JasmineUsernameSupplier su
 }
 ```
 
-> 但老實說, `UsernameIpEventDataSupplier ` 其實是依照兆豐的需求而定的 :/
+> 但實際上, `UsernameIpEventDataSupplier ` 其實是依照兆豐的需求而定的 :/
 
 ## How to use
 
