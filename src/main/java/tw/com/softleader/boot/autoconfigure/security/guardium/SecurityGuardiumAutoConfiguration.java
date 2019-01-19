@@ -66,7 +66,6 @@ public class SecurityGuardiumAutoConfiguration {
   }
 
   @Bean
-  @ConditionalOnMissingBean(SafeguardAspect.class)
   public SafeguardAspect guardAppEventAspect(GuardAppEvent guardAppEvent) {
     return new SafeguardAspect(guardAppEvent);
   }
