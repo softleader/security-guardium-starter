@@ -66,7 +66,7 @@ public void hello() {
 }
 ```
 
-在 `1.0.1` 版本之後, `@Safeguard` 也可以掛在 class 上了! 即該 class 下所有 public method 都會被加入安全監控:
+在 `1.0.1` 版本之後, `@Safeguard` 也可以掛在 class 上了 :mega:! 即該 class 下所有 public method 都會被加入安全監控:
 
 ```java
 @Safeguard
