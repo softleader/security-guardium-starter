@@ -16,7 +16,7 @@ Secure service w/ IBM Security Guardium
 <dependency>
     <groupId>tw.com.softleader</groupId>
     <artifactId>security-guardium-starter</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
 </dependency>
 ```
 
