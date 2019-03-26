@@ -66,6 +66,19 @@ public void hello() {
 }
 ```
 
+在 `1.0.1` 版本之後, `@Safeguard` 也可以掛在 class 上了! 即該 class 下所有 public method 都會被加入安全監控:
+
+```java
+@Safeguard
+public class MyService {
+    
+    // will be safeguard
+    public void hello() {
+      // ...
+    }
+}
+``` 
+
 ## Logging
 
 set `logging.level.tw.com.softleader.boot.security.guardium=trace` to show every sql that `tw.com.softleader.boot.security.guardium.GuardAppEvent` executed

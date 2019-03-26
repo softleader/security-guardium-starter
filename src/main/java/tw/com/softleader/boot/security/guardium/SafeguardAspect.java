@@ -20,7 +20,9 @@ public class SafeguardAspect {
 
   @NonNull private GuardAppEvent event;
 
-  @Around("@annotation(tw.com.softleader.boot.security.guardium.annotation.Safeguard)")
+  @Around(
+      "@annotation(tw.com.softleader.boot.security.guardium.annotation.Safeguard) || "
+          + "@within(tw.com.softleader.boot.security.guardium.annotation.Safeguard)")
   public Object around(final ProceedingJoinPoint pjp) throws Throwable {
     MethodSignature signature = (MethodSignature) pjp.getSignature();
     event.start(signature.getMethod(), pjp.getArgs());
