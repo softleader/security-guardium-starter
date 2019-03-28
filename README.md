@@ -4,6 +4,7 @@ Secure service w/ IBM Security Guardium
 
 ## Properteis
 
+- `softleader.security.guardium.enabled` - 是否啟用, 理論上放了 Starter 就應該啟用, 但為了方便放在 parent pom.xml, 因此還是設定了這個開關 (default: `true`)
 - `softleader.security.guardium.version` - 設定客戶使用的 IBM Security Guardium 版本, IBM Security Guardium 版本目前有 8, 9 跟 10 這幾個大版本, 不確定差異在哪, 但目前第一家客戶 (CKI) 使用的是 10, 因此我們先提供 10 的實作, 當然, 我們現在也就只有 10 的實作 (defualt: `10`)
 - `softleader.security.guardium.query-timeout-second` - 設定 sql statement timeout 秒數, -1 代表使用 driver 預設值, 但 driver default 有可能會 block main thread 太久, 因此提供參數可以控制, 建議要設定 (default: `-1`)
 - `softleader.security.guardium.data-source-ref` - 設定 dataSource bean 名稱 (default `dataSource`)
