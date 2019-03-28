@@ -14,6 +14,9 @@ public class SecurityGuardiumProperties {
   private static final int DEFAULT_QUERY_TIMEOUT_SECOND = -1;
   private static final String DEFAULT_DATA_SOURCE_REF = "dataSource";
 
+  /** Enable Security Guardium for the application. */
+  private boolean enabled = true;
+
   /**
    * 設定客戶使用的 IBM Security Guardium 版本
    *
@@ -33,8 +36,6 @@ public class SecurityGuardiumProperties {
    */
   private int queryTimeoutSecond = DEFAULT_QUERY_TIMEOUT_SECOND;
 
-  /**
-   * 設定 dataSource bean 名稱
-   */
+  /** 設定 dataSource bean 名稱 */
   private String dataSourceRef = DEFAULT_DATA_SOURCE_REF;
 }

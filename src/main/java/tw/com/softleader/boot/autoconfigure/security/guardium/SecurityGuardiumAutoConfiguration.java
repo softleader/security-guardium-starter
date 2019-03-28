@@ -66,6 +66,10 @@ public class SecurityGuardiumAutoConfiguration {
   }
 
   @Bean
+  @ConditionalOnProperty(
+      name = "softleader.security.guardium.enabled",
+      havingValue = "true",
+      matchIfMissing = true)
   public SafeguardAspect guardAppEventAspect(GuardAppEvent guardAppEvent) {
     return new SafeguardAspect(guardAppEvent);
   }
