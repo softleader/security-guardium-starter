@@ -28,6 +28,10 @@ import java.util.HashMap;
 @ComponentScan(basePackageClasses = SecurityGuardiumAutoConfiguration.class)
 @EnableAspectJAutoProxy
 @RequiredArgsConstructor
+@ConditionalOnProperty(
+    name = "softleader.security.guardium.enabled",
+    havingValue = "true",
+    matchIfMissing = true)
 @Slf4j
 public class SecurityGuardiumAutoConfiguration {
 
@@ -66,10 +70,6 @@ public class SecurityGuardiumAutoConfiguration {
   }
 
   @Bean
-  @ConditionalOnProperty(
-      name = "softleader.security.guardium.enabled",
-      havingValue = "true",
-      matchIfMissing = true)
   public SafeguardAspect guardAppEventAspect(GuardAppEvent guardAppEvent) {
     return new SafeguardAspect(guardAppEvent);
   }
