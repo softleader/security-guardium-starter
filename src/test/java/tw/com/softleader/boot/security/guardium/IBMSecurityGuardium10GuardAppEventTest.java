@@ -37,7 +37,7 @@ public class IBMSecurityGuardium10GuardAppEventTest {
       return new Example() {
         @Override
         public String collect(Method method, Object[] args) {
-          setCalls(getCalls() + 1);
+          super.collect(method, args);
           throw new IllegalStateException();
         }
       };
