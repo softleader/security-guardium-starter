@@ -13,13 +13,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 import tw.com.softleader.boot.autoconfigure.security.guardium.SecurityGuardiumAutoConfiguration;
+
+import java.lang.reflect.Method;
+import java.util.Map;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @JdbcTest
-@SpringBootTest(classes = SafeguardAspectTest.Config.class)
+@SpringBootTest(classes = IBMSecurityGuardium10GuardAppEventTest.Config.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class SafeguardAspectTest {
+public class IBMSecurityGuardium10GuardAppEventTest {
 
   @Configuration
   @ComponentScan(basePackageClasses = SafeguardAspectTest.class)
@@ -28,17 +34,31 @@ public class SafeguardAspectTest {
 
     @Bean
     public Example example() {
-      return new Example();
+      return new Example() {
+        @Override
+        public String collect(Method method, Object[] args) {
+          setCalls(getCalls() + 1);
+          throw new IllegalStateException();
+        }
+      };
     }
   }
 
-  @Autowired private ExampleService service;
   @Autowired private JdbcTemplate template;
+  @Autowired private Example example;
+  @Autowired private ExampleService service;
 
+  /** testCommit 測試 Safeguard 在 select from db 出了例外, 不應該影響原本的 transaction */
   @Test
-  public void testSafeguard() {
-    service.hello();
-    int calls = template.queryForObject("SELECT MAX(CALLS) FROM EXAMPLE", int.class);
-    Assert.assertEquals(1, calls);
+  @Transactional
+  public void testCommit() {
+    template.update("INSERT INTO EXAMPLE (CALLS) VALUES (?)", 1);
+    example.setCalls(1);
+    try {
+      service.hello();
+    } finally {
+      int calls = template.queryForObject("SELECT MAX(CALLS) FROM EXAMPLE", int.class);
+      Assert.assertEquals(2, calls);
+    }
   }
 }
