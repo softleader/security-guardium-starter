@@ -1,12 +1,16 @@
 package tw.com.softleader.data.security.guardium;
 
 import java.util.StringJoiner;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Value;
 
 /**
  * {@code GuardAppEvent} 封裝每次要寫入 Guardium API 資訊的物件
  */
 @Value
+@Builder
+@AllArgsConstructor
 public class GuardAppEvent {
 
   /**

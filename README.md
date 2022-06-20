@@ -21,7 +21,7 @@ Secure service w/ IBM Security Guardium
 </dependency>
 ```
 
-> 如果你的專案使用 [softleader/softleader-boot-starter-platform](https://github.com/softleader/softleader-boot-starter-platform), 請參考 [legacy branch](https://github.com/softleader/security-guardium-starter/tree/legacy)
+> 如果你的專案使用 [softleader/softleader-boot-starter-platform](https://github.com/softleader/softleader-boot-starter-platform), 請參考 [legacy 版本](https://github.com/softleader/security-guardium-starter/tree/legacy)
 
 此 Starter 預設啟動的 IBM Security Guardium 實作為版本 10, 實作為 `tw.com.softleader.data.security.guardium.IBMSecurityGuardium10GuardAppEventApi`
 
@@ -29,47 +29,25 @@ Secure service w/ IBM Security Guardium
 
 ```java
 @Configuration
-public class SomeConfiguration {
+class MyConfig {
 
-	@Bean
-	public EventDataSupplier eventDataSupplier(
-		return (method, args) -> {
-			Map<String, String> data = new LinkedHashMap<>(); // key=欄位名稱, value=值
-    			data.put(...); // 放入要寫的 data
-                   		       // data 應該是要每次 runtime 才取, 例如呼叫另一個 class 取得資料
-                    		       // 而非直接 hard code 在這邊
-			return data;
-	    }
-	}
+  @Bean
+  GuardAppEventSupplier guardAppEventSupplier() {
+    return (method, args) -> GuardAppEvent.builder()
+      .userName("...") // Guardium 的 GuardAppEventUserName, ex: 登入系統之使用者 帳號(ID)
+      .type("...") // Guardium 的 GuardAppEventType, ex: 使用者所使用的 應用系統名稱_模組功能名稱
+      .strValue("...") // Guardium 的 GuardAppEventStrValue, ex: 使用者 IP 位址
+      .build();
+  }
 }
 ```
 
 - `method` - 被 AOP 攔截的 method
 - `args` - 被 AOP 攔截 method 的 input 參數
 
-如果你的專案有依賴 [softleader-product/softleader-jasmine-config](https://github.com/softleader-product/softleader-jasmine-config) 那就更簡單了, 直接使用 [UsernameIpEventDataSupplier](https://github.com/softleader-product/softleader-jasmine-config/blob/master/src/main/java/tw/com/softleader/jasmine/security/guardium/UsernameIpEventDataSupplier.java) 即可:
-
-```java
-@Bean
-public EventDataSupplier eventDataSupplier(@Autowired JasmineUsernameSupplier supplier) {
-	return EventDataSupplier.proxy(new UsernameIpEventDataSupplier(supplier));
-}
-```
-
-> 但實際上, `UsernameIpEventDataSupplier ` 其實是依照兆豐的需求而定的 :/
-
 ## How to use
 
-在你希望被加入安全監控的 Spring service method 上加上 `@Safeguard` 即可:
-
-```java
-@Safeguard
-public void hello() {
-  // ...
-}
-```
-
-在 `1.0.1` 版本之後, `@Safeguard` 也可以掛在 class 上了 :mega:! 即該 class 下所有 public method 都會被加入安全監控:
+在你希望被加入安全監控的 Spring service class 或 method 上加上 `@Safeguard` 即可:
 
 ```java
 @Safeguard
@@ -84,4 +62,4 @@ public class MyService {
 
 ## Logging
 
-set `logging.level.tw.com.softleader.data.security.guardium=trace` to show every sql that `tw.com.softleader.data.security.guardium.GuardAppEventApi` executed
+set `logging.level.tw.com.softleader.data.security.guardium=trace` to show every sql that `GuardAppEventApi` executed

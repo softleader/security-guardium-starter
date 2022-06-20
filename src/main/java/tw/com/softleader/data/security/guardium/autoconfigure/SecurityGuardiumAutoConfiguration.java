@@ -4,9 +4,6 @@ import static org.apache.commons.lang3.exception.ExceptionUtils.getRootCauseMess
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Optional;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +18,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.StringUtils;
 import tw.com.softleader.data.security.guardium.GuardAppEvent;
-import tw.com.softleader.data.security.guardium.GuardAppEventSupplier;
 import tw.com.softleader.data.security.guardium.GuardAppEventApi;
+import tw.com.softleader.data.security.guardium.GuardAppEventSupplier;
 import tw.com.softleader.data.security.guardium.IBMSecurityGuardium10GuardAppEventApi;
 import tw.com.softleader.data.security.guardium.IBMSecurityGuardium10OracleGuardAppEventApi;
 import tw.com.softleader.data.security.guardium.SafeguardAspect;
@@ -78,8 +75,8 @@ public class SecurityGuardiumAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(GuardAppEventSupplier.class)
-  GuardAppEventSupplier emptyEventDataSupplier() {
-    return (target, args) -> new GuardAppEvent(null, null, null);
+  GuardAppEventSupplier emptyGuardAppEventSupplier() {
+    return (method, args) -> GuardAppEvent.builder().build();
   }
 
   @Bean
