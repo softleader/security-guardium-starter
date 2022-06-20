@@ -7,11 +7,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /** @author matt */
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "softleader.security.guardium")
+@ConfigurationProperties(prefix = "security.guardium")
 public class SecurityGuardiumProperties {
 
   static final String VERSION_10 = "10";
-  private static final int DEFAULT_QUERY_TIMEOUT_SECOND = -1;
+  private static final int DEFAULT_QUERY_TIMEOUT_SECOND = 10;
   private static final String DEFAULT_DATA_SOURCE_REF = "dataSource";
 
   /** Enable Security Guardium for the application. */
@@ -21,14 +21,9 @@ public class SecurityGuardiumProperties {
    * 設定客戶使用的 IBM Security Guardium 版本
    *
    * <p>
-   * IBM Security Guardium 版本目前有 8, 9 跟 10 這幾個大版本, 不確定差異在但目前第一家客戶 (CKI) 使用的是 10, 因此我們先提供 10 的實作
+   * IBM Security Guardium 版本目前有 8, 9 跟 10 這幾個大版本, 目前只支援 10 的實作
    *
-   * <p>
-   * 當然, 我們現在也就只有 10 的實作
-   *
-   * @see <a
-   *      href=
-   *      "https://www.ibm.com/support/knowledgecenter/en/SSMPHH/SSMPHH_welcome.html">https://www.ibm.com/support/knowledgecenter/en/SSMPHH/SSMPHH_welcome.html</a>
+   * @see <a href= "https://www.ibm.com/support/knowledgecenter/en/SSMPHH/SSMPHH_welcome.html">https://www.ibm.com/support/knowledgecenter/en/SSMPHH/SSMPHH_welcome.html</a>
    */
   private String version = VERSION_10;
 
