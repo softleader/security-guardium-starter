@@ -1,1 +1,1 @@
-CREATE TABLE EXAMPLE (CALLS INT)
+create table test(id bigint auto_increment, name varchar(255));

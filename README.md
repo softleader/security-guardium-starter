@@ -15,15 +15,17 @@ Secure service w/ IBM Security Guardium
 
 ```xml
 <dependency>
-    <groupId>tw.com.softleader</groupId>
+    <groupId>tw.com.softleader.data</groupId>
     <artifactId>security-guardium-starter</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
-此 Starter 預設啟動的 IBM Security Guardium 實作為版本 10, 實作為 `tw.com.softleader.boot.security.guardium.IBMSecurityGuardium10GuardAppEvent`
+> 如果你的專案使用 [softleader/softleader-boot-starter-platform](https://github.com/softleader/softleader-boot-starter-platform), 請參考 [legacy branch](https://github.com/softleader/security-guardium-starter/tree/legacy)
 
-在 `IBMSecurityGuardium10GuardAppEvent` 中, 會透過 `tw.com.softleader.boot.security.guardium.EventDataSupplier` 來取得每一次要寫入 IBM Security Guardium 的 runtime 資料, 因此使用的專案必須要提供 `EventDataSupplier` 的實作:
+此 Starter 預設啟動的 IBM Security Guardium 實作為版本 10, 實作為 `tw.com.softleader.data.security.guardium.IBMSecurityGuardium10GuardAppEventApi`
+
+在 `IBMSecurityGuardium10GuardAppEvent` 中, 會透過 `tw.com.softleader.data.security.guardium.GuardAppEventSupplier` 來取得每一次要寫入 IBM Security Guardium 的 runtime 資料, 因此使用的專案必須要提供 `EventDataSupplier` 的實作:
 
 ```java
 @Configuration
@@ -82,4 +84,4 @@ public class MyService {
 
 ## Logging
 
-set `logging.level.tw.com.softleader.boot.security.guardium=trace` to show every sql that `tw.com.softleader.boot.security.guardium.GuardAppEvent` executed
+set `logging.level.tw.com.softleader.data.security.guardium=trace` to show every sql that `tw.com.softleader.data.security.guardium.GuardAppEventApi` executed

@@ -1,1 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=tw.com.softleader.boot.autoconfigure.security.guardium.SecurityGuardiumAutoConfiguration
