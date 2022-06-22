@@ -5,6 +5,9 @@ Secure service w/ IBM Security Guardium
 ## Properteis
 
 - `softleader.security.guardium.enabled` - 是否啟用 (default: `true`)
+
+以下設定適用於純 JDBC, ex: [spring-data-jdbc](https://spring.io/projects/spring-data-jdbc)
+
 - `softleader.security.guardium.query-timeout-second` - 設定 sql statement timeout 秒數, -1 代表使用 driver 預設值, 但 driver default 有可能會 block main thread 太久, 因此提供參數可以控制, 建議要設定 (default: `10`)
 - `softleader.security.guardium.data-source-ref` - 設定 dataSource bean 名稱 (default `dataSource`)
 
@@ -20,11 +23,11 @@ Secure service w/ IBM Security Guardium
 </dependency>
 ```
 
-> 如果你的專案使用 [softleader/softleader-boot-starter-platform](https://github.com/softleader/softleader-boot-starter-platform), 請參考 [legacy 版本](https://github.com/softleader/security-guardium-starter/tree/legacy)
+> 如果你的專案使用 [softleader/softleader-boot-starter-platform](https://github.com/softleader/softleader-boot-starter-platform), 請使用 [legacy 版本](https://github.com/softleader/security-guardium-starter/tree/legacy)
 
-此 Starter 預設啟動的 IBM Security Guardium 實作為版本 10, 實作為 `tw.com.softleader.data.security.guardium.IBMSecurityGuardium10Api`
+此 Starter 預設啟動的 IBM Security Guardium 實作為版本 10, 實作為 [`IBMSecurityGuardium10Api`](./src/main/java/tw/com/softleader/data/security/guardium/IBMSecurityGuardium10Api.java), 請注意你的環境是否符合該版本的規格
 
-在 `IBMSecurityGuardium10GuardAppEvent` 中, 會透過 `tw.com.softleader.data.security.guardium.GuardAppEventSupplier` 來取得每一次要寫入 IBM Security Guardium 的 runtime 資料, 因此使用的專案必須要提供 `EventDataSupplier` 的實作:
+在使用上專案必須提供 [`GuardAppEventSupplier`](./src/main/java/tw/com/softleader/data/security/guardium/GuardAppEventSupplier.java) 實作, 並將之註冊成一個 Spring Bean, `IBMSecurityGuardium10Api` 會在每一次要寫入 IBM Security Guardium 時所要取得的 runtime 資料, 範例如下:
 
 ```java
 @Configuration
@@ -33,9 +36,9 @@ class MyConfig {
   @Bean
   GuardAppEventSupplier guardAppEventSupplier() {
     return (method, args) -> GuardAppEvent.builder()
-      .userName("...") // Guardium 的 GuardAppEventUserName, ex: 登入系統之使用者 帳號(ID)
-      .type("...") // Guardium 的 GuardAppEventType, ex: 使用者所使用的 應用系統名稱_模組功能名稱
-      .strValue("...") // Guardium 的 GuardAppEventStrValue, ex: 使用者 IP 位址
+      .userName("...") // 對應 Guardium API 的 GuardAppEventUserName, ex: 登入系統之使用者 帳號(ID)
+      .type("...") // 對應 Guardium API 的 GuardAppEventType, ex: 使用者所使用的 應用系統名稱_模組功能名稱
+      .strValue("...") // 對應 Guardium API 的 GuardAppEventStrValue, ex: 使用者 IP 位址
       .build();
   }
 }
