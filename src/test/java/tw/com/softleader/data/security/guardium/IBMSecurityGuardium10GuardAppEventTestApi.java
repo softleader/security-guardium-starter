@@ -35,7 +35,7 @@ class IBMSecurityGuardium10GuardAppEventTestApi {
   @SpyBean
   SafeguardAspect aspect;
   @SpyBean
-  GuardAppEventApi guardAppEventApi;
+  GuardiumApi guardiumApi;
 
   @DisplayName("@Safeguard 在運作過程中如果出了例外, 不應該影響原本的 Transaction")
   @Test
@@ -48,11 +48,11 @@ class IBMSecurityGuardium10GuardAppEventTestApi {
         template.queryForObject("select max(id) from test where name = ?", int.class, name));
     var inOrder = inOrder(
         aspect,
-        guardAppEventApi,
+        guardiumApi,
         exampleEventDataSupplier);
     inOrder.verify(aspect, times(1)).around(Mockito.any());
-    inOrder.verify(guardAppEventApi, times(1)).start(Mockito.any(), Mockito.any());
+    inOrder.verify(guardiumApi, times(1)).start(Mockito.any(), Mockito.any());
     inOrder.verify(exampleEventDataSupplier, times(1)).get(Mockito.any(), Mockito.any());
-    inOrder.verify(guardAppEventApi, times(1)).released();
+    inOrder.verify(guardiumApi, times(1)).released();
   }
 }

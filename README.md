@@ -4,8 +4,7 @@ Secure service w/ IBM Security Guardium
 
 ## Properteis
 
-- `softleader.security.guardium.enabled` - 是否啟用, 理論 app 上放了 starter 就應該啟用, 但為了方便專案統一放在 parent pom.xml, 因此 `1.0.2` 版本後增加了這個開關 (default: `true`)
-- `softleader.security.guardium.version` - 設定客戶使用的 IBM Security Guardium 版本, IBM Security Guardium 版本目前有 8, 9 跟 10 這幾個大版本, 不確定差異在哪, 但目前第一家客戶 (CKI) 使用的是 10, 因此我們先提供 10 的實作, 當然, 我們現在也就只有 10 的實作 (defualt: `10`)
+- `softleader.security.guardium.enabled` - 是否啟用 (default: `true`)
 - `softleader.security.guardium.query-timeout-second` - 設定 sql statement timeout 秒數, -1 代表使用 driver 預設值, 但 driver default 有可能會 block main thread 太久, 因此提供參數可以控制, 建議要設定 (default: `10`)
 - `softleader.security.guardium.data-source-ref` - 設定 dataSource bean 名稱 (default `dataSource`)
 
@@ -23,7 +22,7 @@ Secure service w/ IBM Security Guardium
 
 > 如果你的專案使用 [softleader/softleader-boot-starter-platform](https://github.com/softleader/softleader-boot-starter-platform), 請參考 [legacy 版本](https://github.com/softleader/security-guardium-starter/tree/legacy)
 
-此 Starter 預設啟動的 IBM Security Guardium 實作為版本 10, 實作為 `tw.com.softleader.data.security.guardium.IBMSecurityGuardium10GuardAppEventApi`
+此 Starter 預設啟動的 IBM Security Guardium 實作為版本 10, 實作為 `tw.com.softleader.data.security.guardium.IBMSecurityGuardium10Api`
 
 在 `IBMSecurityGuardium10GuardAppEvent` 中, 會透過 `tw.com.softleader.data.security.guardium.GuardAppEventSupplier` 來取得每一次要寫入 IBM Security Guardium 的 runtime 資料, 因此使用的專案必須要提供 `EventDataSupplier` 的實作:
 

@@ -29,7 +29,7 @@ class SafeguardAspectTest {
   @Autowired
   JdbcTemplate template;
   @SpyBean
-  GuardAppEventApi guardAppEventApi;
+  GuardiumApi guardiumApi;
 
   @Test
   void testSafeguard() throws Throwable {
@@ -41,11 +41,11 @@ class SafeguardAspectTest {
 
     var inOrder = inOrder(
         aspect,
-        guardAppEventApi,
+        guardiumApi,
         exampleEventDataSupplier);
     inOrder.verify(aspect, times(1)).around(Mockito.any());
-    inOrder.verify(guardAppEventApi, times(1)).start(Mockito.any(), Mockito.any());
+    inOrder.verify(guardiumApi, times(1)).start(Mockito.any(), Mockito.any());
     inOrder.verify(exampleEventDataSupplier, times(1)).get(Mockito.any(), Mockito.any());
-    inOrder.verify(guardAppEventApi, times(1)).released();
+    inOrder.verify(guardiumApi, times(1)).released();
   }
 }

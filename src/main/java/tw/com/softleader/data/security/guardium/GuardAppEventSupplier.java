@@ -3,7 +3,7 @@ package tw.com.softleader.data.security.guardium;
 import java.lang.reflect.Method;
 
 /**
- * {@code GuardAppEventSupplier} 提供 {@link GuardAppEventApi} 在 runtime 每次呼叫取用
+ * {@code GuardAppEventSupplier} 提供 {@link GuardiumApi} 在 runtime 每次呼叫取用
  *
  * @author matt
  */

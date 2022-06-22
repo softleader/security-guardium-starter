@@ -3,11 +3,11 @@ package tw.com.softleader.data.security.guardium;
 import java.lang.reflect.Method;
 
 /**
- * {@code GuardAppEventApi} 負責處理每次的呼叫 IBM Security Guardium
+ * {@code GuardiumApi} 定義串接 IBM Security Guardium API 的介面
  *
  * @author matt
  */
-public interface GuardAppEventApi {
+public interface GuardiumApi {
 
   /**
    * The underlying class should implement GuardAppEvent:Start

@@ -17,17 +17,17 @@ import org.aspectj.lang.reflect.MethodSignature;
 public class SafeguardAspect {
 
   @NonNull
-  private GuardAppEventApi event;
+  final GuardiumApi guardiumApi;
 
   @Around("@annotation(tw.com.softleader.data.security.guardium.annotation.Safeguard) || "
       + "@within(tw.com.softleader.data.security.guardium.annotation.Safeguard)")
   public Object around(final ProceedingJoinPoint pjp) throws Throwable {
-    MethodSignature signature = (MethodSignature) pjp.getSignature();
-    event.start(signature.getMethod(), pjp.getArgs());
+    var signature = (MethodSignature) pjp.getSignature();
+    guardiumApi.start(signature.getMethod(), pjp.getArgs());
     try {
       return pjp.proceed();
     } finally {
-      event.released();
+      guardiumApi.released();
     }
   }
 }
