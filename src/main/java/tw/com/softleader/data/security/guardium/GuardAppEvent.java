@@ -13,9 +13,6 @@ import lombok.Value;
 @AllArgsConstructor
 public class GuardAppEvent {
 
-  private static final String EVENT_START = "GuardAppEvent:Start";
-  private static final String EVENT_RELEASED = "GuardAppEvent:Released";
-
   /**
    * 對應 Guardium 的 GuardAppEventUserName, ex: 登入系統之使用者 帳號(ID)
    */
