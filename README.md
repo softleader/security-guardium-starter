@@ -2,6 +2,8 @@
 
 Secure service w/ IBM Security Guardium
 
+> 如果你的專案使用 [softleader/softleader-boot-starter-platform](https://github.com/softleader/softleader-boot-starter-platform), 請使用 [legacy 版本](https://github.com/softleader/security-guardium-starter/tree/legacy)
+
 ## Properteis
 
 - `softleader.security.guardium.enabled` - 是否啟用 (default: `true`)
@@ -22,8 +24,6 @@ Secure service w/ IBM Security Guardium
     <version>2.0.0</version>
 </dependency>
 ```
-
-> 如果你的專案使用 [softleader/softleader-boot-starter-platform](https://github.com/softleader/softleader-boot-starter-platform), 請使用 [legacy 版本](https://github.com/softleader/security-guardium-starter/tree/legacy)
 
 此 Starter 預設啟動的 IBM Security Guardium 實作為版本 10, 實作為 [`IBMSecurityGuardium10Api`](./src/main/java/tw/com/softleader/data/security/guardium/IBMSecurityGuardium10Api.java), 請注意你的環境是否符合[規格](./docs)
 
