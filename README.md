@@ -27,7 +27,7 @@ Secure service w/ IBM Security Guardium
 
 此 Starter 預設啟動的 IBM Security Guardium 實作為版本 10, 實作為 [`IBMSecurityGuardium10Api`](./src/main/java/tw/com/softleader/data/security/guardium/IBMSecurityGuardium10Api.java), 請注意你的環境是否符合[規格](./docs)
 
-在使用上專案必須提供 [`GuardAppEventSupplier`](./src/main/java/tw/com/softleader/data/security/guardium/GuardAppEventSupplier.java) 實作, 並將之註冊成一個 Spring Bean, `IBMSecurityGuardium10Api` 會在每一次要寫入 IBM Security Guardium 時所要取得的 runtime 資料, 範例如下:
+在使用上專案必須提供 [`GuardAppEventSupplier`](./src/main/java/tw/com/softleader/data/security/guardium/GuardAppEventSupplier.java) 實作, 並將之註冊成一個 Spring Bean, `GuardAppEventSupplier` 是用來提供每一次要寫入 IBM Security Guardium 時的 runtime 資料, 範例如下:
 
 ```java
 @Configuration
