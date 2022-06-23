@@ -7,5 +7,8 @@ package tw.com.softleader.data.security.guardium;
  */
 public interface NativeQuery {
 
+  /**
+   * Executing SQL statement
+   */
   void execute(String sql);
 }

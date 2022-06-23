@@ -12,8 +12,16 @@ public abstract class NativeQueryGuardiumApi implements GuardiumApi {
   public static final String EVENT_START = "GuardAppEvent:Start";
   public static final String EVENT_RELEASED = "GuardAppEvent:Released";
 
+  /**
+   * @param method 被 AOP 攔截的 method
+   * @param args 被 AOP 攔截 method 的 input 參數
+   * @return Start SQL statement to execute
+   */
   protected abstract String startSql(Method method, Object[] args);
 
+  /**
+   * @return Released SQL statement to execute
+   */
   protected abstract String releasedSql();
 
   protected abstract NativeQuery getNativeQuery();
