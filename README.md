@@ -19,9 +19,9 @@ Secure service w/ IBM Security Guardium
 
 ```xml
 <dependency>
-    <groupId>tw.com.softleader.data</groupId>
-    <artifactId>security-guardium-starter</artifactId>
-    <version>2.0.0</version>
+  <groupId>tw.com.softleader.data</groupId>
+  <artifactId>security-guardium-starter</artifactId>
+  <version>last-release-version</version>
 </dependency>
 ```
 
