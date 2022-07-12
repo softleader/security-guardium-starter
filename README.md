@@ -6,12 +6,12 @@ Secure service w/ IBM Security Guardium
 
 ## Properteis
 
-- `softleader.security.guardium.enabled` - 是否啟用 (default: `true`)
+- `security.guardium.enabled` - 是否啟用 (default: `true`)
 
 以下設定適用於純 JDBC (ex: [Spring Data JDBC](https://spring.io/projects/spring-data-jdbc)), 若使用 JPA (ex: [Spring Data JPA](https://spring.io/projects/spring-data-jpa)) 則以下參數將忽略
 
-- `softleader.security.guardium.query-timeout-second` - 設定 sql statement timeout 秒數, -1 代表使用 driver 預設值, 但 driver default 有可能會 block main thread 太久, 因此提供參數可以控制, 建議要設定 (default: `10`)
-- `softleader.security.guardium.data-source-ref` - 設定 dataSource bean 名稱 (default `dataSource`)
+- `security.guardium.query-timeout-second` - 設定 sql statement timeout 秒數, -1 代表使用 driver 預設值, 但 driver default 有可能會 block main thread 太久, 因此提供參數可以控制, 建議要設定 (default: `10`)
+- `security.guardium.data-source-ref` - 設定 dataSource bean 名稱 (default `dataSource`)
 
 ## How to setup
 
