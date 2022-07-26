@@ -4,6 +4,7 @@ import static org.apache.commons.lang3.exception.ExceptionUtils.getRootCauseMess
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -70,7 +71,7 @@ public class SecurityGuardiumAutoConfiguration {
   NativeQuery jpaNativeQuery(EntityManagerFactoryInfo factory) {
     log.info("Initializing JPA NativeQuery for persistence unit '{}'",
         factory.getPersistenceUnitName());
-    return new JpaNativeQuery();
+    return new JpaNativeQuery(factory.getNativeEntityManagerFactory());
   }
 
   @Bean
