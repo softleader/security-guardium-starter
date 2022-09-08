@@ -7,6 +7,9 @@ Secure service w/ IBM Security Guardium
 ## Properteis
 
 - `security.guardium.enabled` - 是否啟用 (default: `true`)
+- `security.guardium.dialect` - Guardium 使用的方言: `AUTO`, `ORACLE`, `DEFAULT` (default: `AUTO`)
+
+> `AUTO` dialect detecting 會在 App 啟動時建立資料庫連線來判斷是否為 `ORACLE`, 否則退回使用 `DEFAULT` 方言 
 
 以下設定適用於純 JDBC (ex: [Spring Data JDBC](https://spring.io/projects/spring-data-jdbc)), 若使用 JPA (ex: [Spring Data JPA](https://spring.io/projects/spring-data-jpa)) 則以下參數將忽略
 

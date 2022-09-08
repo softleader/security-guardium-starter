@@ -1,10 +1,15 @@
 package tw.com.softleader.data.security.guardium.autoconfigure;
 
+import static tw.com.softleader.data.security.guardium.GuardiumDialect.AUTO;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import tw.com.softleader.data.security.guardium.GuardiumDialect;
 
-/** @author matt */
+/**
+ * @author matt
+ */
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "security.guardium")
@@ -13,8 +18,15 @@ public class SecurityGuardiumProperties {
   private static final int DEFAULT_QUERY_TIMEOUT_SECOND = 10;
   private static final String DEFAULT_DATA_SOURCE_REF = "dataSource";
 
-  /** Enable Security Guardium for the application. */
+  /**
+   * Enable Security Guardium for the application.
+   */
   private boolean enabled = true;
+
+  /**
+   * Guardium dialect
+   */
+  private GuardiumDialect dialect = AUTO;
 
   /**
    * 設定 sql statement timeout 秒數, -1 代表使用 driver 預設值
@@ -24,6 +36,8 @@ public class SecurityGuardiumProperties {
    */
   private int queryTimeoutSecond = DEFAULT_QUERY_TIMEOUT_SECOND;
 
-  /** 設定 dataSource bean 名稱 */
+  /**
+   * 設定 dataSource bean 名稱
+   */
   private String dataSourceRef = DEFAULT_DATA_SOURCE_REF;
 }
