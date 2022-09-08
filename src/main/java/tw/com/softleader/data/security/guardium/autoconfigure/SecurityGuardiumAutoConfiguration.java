@@ -4,7 +4,6 @@ import static org.apache.commons.lang3.exception.ExceptionUtils.getRootCauseMess
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,21 +46,38 @@ public class SecurityGuardiumAutoConfiguration {
   @ConditionalOnMissingBean(GuardiumApi.class)
   GuardiumApi guardiumApi(GuardAppEventSupplier supplier, NativeQuery nativeQuery) {
     var dataSourceRef = properties.getDataSourceRef();
-    log.info("Retrieving dataSource bean '{}' for GuardAppEvent", dataSourceRef);
+    log.info("Retrieving dataSource bean '{}' for {}", dataSourceRef,
+        GuardAppEvent.class.getSimpleName());
     var ds = factory.getBean(dataSourceRef, DataSource.class);
     var guardiumApi = (NativeQueryGuardiumApi) new IBMSecurityGuardium10Api(
         supplier,
         nativeQuery);
+    switch (properties.getDialect()) {
+      case ORACLE:
+        log.info("Initializing OracleNativeQueryGuardiumApi");
+        return new OracleNativeQueryGuardiumApi(guardiumApi);
+      case AUTO:
+        log.info("Auto detecting dialect for GuardiumApi");
+        return autoDetectedGuardiumApi(ds, guardiumApi);
+      case DEFAULT:
+      default:
+        log.info("Initializing default NativeQueryGuardiumApi");
+        return guardiumApi;
+    }
+  }
+
+  private GuardiumApi autoDetectedGuardiumApi(DataSource ds, NativeQueryGuardiumApi guardiumApi) {
     try (Connection connection = ds.getConnection()) {
       if (connection.getMetaData().getDatabaseProductName().equalsIgnoreCase("Oracle")) {
-        log.info("Detected Oracle database, wrapping to '{}'",
-            OracleNativeQueryGuardiumApi.class.getSimpleName());
-        guardiumApi = new OracleNativeQueryGuardiumApi(guardiumApi);
+        log.info("Detected Oracle database, initializing OracleNativeQueryGuardiumApi");
+        return new OracleNativeQueryGuardiumApi(guardiumApi);
       }
     } catch (SQLException e) {
       log.warn("Failed to auto-detected GuardiumApi type, falling back to default: {}",
           getRootCauseMessage(e));
+      return guardiumApi;
     }
+    log.info("Initializing default NativeQueryGuardiumApi");
     return guardiumApi;
   }
 

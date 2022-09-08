@@ -5,6 +5,8 @@ import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.times;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,12 @@ class SafeguardAspectTest {
   JdbcTemplate template;
   @SpyBean
   GuardiumApi guardiumApi;
+
+  @BeforeEach
+  void setup() {
+    Assertions.assertThat(guardiumApi)
+        .isInstanceOf(NativeQueryGuardiumApi.class);
+  }
 
   @Test
   void testSafeguard() throws Throwable {

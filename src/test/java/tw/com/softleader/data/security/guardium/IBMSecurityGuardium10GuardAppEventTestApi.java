@@ -8,6 +8,9 @@ import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.times;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 
+import org.aspectj.lang.annotation.Before;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -36,6 +39,12 @@ class IBMSecurityGuardium10GuardAppEventTestApi {
   SafeguardAspect aspect;
   @SpyBean
   GuardiumApi guardiumApi;
+
+  @BeforeEach
+  void setup() {
+    Assertions.assertThat(guardiumApi)
+        .isInstanceOf(NativeQueryGuardiumApi.class);
+  }
 
   @DisplayName("@Safeguard 在運作過程中如果出了例外, 不應該影響原本的 Transaction")
   @Test
