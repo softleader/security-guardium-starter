@@ -72,13 +72,13 @@ public class SecurityGuardiumAutoConfiguration {
         log.info("Detected Oracle database, initializing OracleNativeQueryGuardiumApi");
         return new OracleNativeQueryGuardiumApi(guardiumApi);
       }
+      log.info("Initializing default NativeQueryGuardiumApi");
+      return guardiumApi;
     } catch (SQLException e) {
       log.warn("Failed to auto-detected GuardiumApi type, falling back to default: {}",
           getRootCauseMessage(e));
       return guardiumApi;
     }
-    log.info("Initializing default NativeQueryGuardiumApi");
-    return guardiumApi;
   }
 
   @Bean
