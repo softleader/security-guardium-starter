@@ -33,7 +33,7 @@ public abstract class NativeQueryGuardiumApi implements GuardiumApi {
       log.trace("Setting an application event: {}", sql);
       getNativeQuery().execute(sql);
     } catch (Exception e) {
-      log.error(EVENT_START, e);
+      log.warn("Failed to " + EVENT_START, e);
     }
   }
 
@@ -44,7 +44,7 @@ public abstract class NativeQueryGuardiumApi implements GuardiumApi {
       log.trace("Clearing an application event: {}", sql);
       getNativeQuery().execute(sql);
     } catch (Exception e) {
-      log.error(EVENT_RELEASED, e);
+      log.warn("Failed to " + EVENT_RELEASED, e);
     }
   }
 }
