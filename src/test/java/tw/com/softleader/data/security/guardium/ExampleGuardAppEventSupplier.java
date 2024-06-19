@@ -10,10 +10,6 @@ public class ExampleGuardAppEventSupplier implements GuardAppEventSupplier {
 
   @Override
   public GuardAppEvent get(Method method, Object[] args) {
-    return GuardAppEvent.builder()
-        .userName("XXX")
-        .type(method.toString())
-        .strValue("ZZZ")
-        .build();
+    return GuardAppEvent.builder().userName("XXX").type(method.toString()).strValue("ZZZ").build();
   }
 }

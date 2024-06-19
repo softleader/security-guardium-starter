@@ -3,9 +3,7 @@ package tw.com.softleader.data.security.guardium;
 import java.lang.reflect.Method;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * {@code NativeQueryGuardiumApi} 定義從 {@link GuardAppEvent} 取得 Native SQL 的介面
- */
+/** {@code NativeQueryGuardiumApi} 定義從 {@link GuardAppEvent} 取得 Native SQL 的介面 */
 @Slf4j
 public abstract class NativeQueryGuardiumApi implements GuardiumApi {
 

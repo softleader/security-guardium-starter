@@ -18,26 +18,19 @@ public class SecurityGuardiumProperties {
   private static final int DEFAULT_QUERY_TIMEOUT_SECOND = 10;
   private static final String DEFAULT_DATA_SOURCE_REF = "dataSource";
 
-  /**
-   * Enable Security Guardium for the application.
-   */
+  /** Enable Security Guardium for the application. */
   private boolean enabled = true;
 
-  /**
-   * Guardium dialect
-   */
+  /** Guardium dialect */
   private GuardiumDialect dialect = AUTO;
 
   /**
    * 設定 sql statement timeout 秒數, -1 代表使用 driver 預設值
    *
-   * <p>
-   * 但 driver default 有可能會 block main thread 太久, 因此提供參數可以控制, 建議要設定
+   * <p>但 driver default 有可能會 block main thread 太久, 因此提供參數可以控制, 建議要設定
    */
   private int queryTimeoutSecond = DEFAULT_QUERY_TIMEOUT_SECOND;
 
-  /**
-   * 設定 dataSource bean 名稱
-   */
+  /** 設定 dataSource bean 名稱 */
   private String dataSourceRef = DEFAULT_DATA_SOURCE_REF;
 }

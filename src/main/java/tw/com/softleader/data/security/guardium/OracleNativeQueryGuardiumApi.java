@@ -7,8 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OracleNativeQueryGuardiumApi extends NativeQueryGuardiumApi {
 
-  @NonNull
-  final NativeQueryGuardiumApi delegate;
+  @NonNull final NativeQueryGuardiumApi delegate;
 
   @Override
   public String startSql(Method method, Object[] args) {

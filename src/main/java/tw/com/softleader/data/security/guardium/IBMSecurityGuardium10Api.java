@@ -5,23 +5,17 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-/**
- * Follow IBM Security Guardium 版本 10 的規格的實作
- */
+/** Follow IBM Security Guardium 版本 10 的規格的實作 */
 @RequiredArgsConstructor
 public class IBMSecurityGuardium10Api extends NativeQueryGuardiumApi {
 
-  @NonNull
-  final GuardAppEventSupplier guardAppEventSupplier;
-  @Getter
-  @NonNull
-  final NativeQuery nativeQuery;
+  @NonNull final GuardAppEventSupplier guardAppEventSupplier;
+  @Getter @NonNull final NativeQuery nativeQuery;
 
   @Override
   public String startSql(Method method, Object[] args) {
-    return String.format("SELECT '%s',%s",
-        EVENT_START,
-        guardAppEventSupplier.get(method, args).toString());
+    return String.format(
+        "SELECT '%s',%s", EVENT_START, guardAppEventSupplier.get(method, args).toString());
   }
 
   @Override

@@ -7,12 +7,10 @@ class GuardAppEventTest {
 
   @Test
   void testCollect() {
-    GuardAppEvent event = new GuardAppEvent(
-        "XXXX",
-        "YYYY",
-        "ZZZZ");
+    GuardAppEvent event = new GuardAppEvent("XXXX", "YYYY", "ZZZZ");
 
-    String expected = "'GuardAppEventUserName:XXXX','GuardAppEventType:YYYY','GuardAppEventStrValue:ZZZZ'";
+    String expected =
+        "'GuardAppEventUserName:XXXX','GuardAppEventType:YYYY','GuardAppEventStrValue:ZZZZ'";
     String actual = event.toString();
     Assertions.assertEquals(expected, actual);
   }

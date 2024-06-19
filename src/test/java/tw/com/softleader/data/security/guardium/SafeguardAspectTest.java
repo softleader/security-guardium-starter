@@ -22,21 +22,15 @@ import tw.com.softleader.data.security.guardium.autoconfigure.SecurityGuardiumAu
 @ImportAutoConfiguration(classes = SecurityGuardiumAutoConfiguration.class)
 class SafeguardAspectTest {
 
-  @SpyBean
-  ExampleGuardAppEventSupplier exampleEventDataSupplier;
-  @SpyBean
-  SafeguardAspect aspect;
-  @Autowired
-  ExampleService service;
-  @Autowired
-  JdbcTemplate template;
-  @SpyBean
-  GuardiumApi guardiumApi;
+  @SpyBean ExampleGuardAppEventSupplier exampleEventDataSupplier;
+  @SpyBean SafeguardAspect aspect;
+  @Autowired ExampleService service;
+  @Autowired JdbcTemplate template;
+  @SpyBean GuardiumApi guardiumApi;
 
   @BeforeEach
   void setup() {
-    Assertions.assertThat(guardiumApi)
-        .isInstanceOf(NativeQueryGuardiumApi.class);
+    Assertions.assertThat(guardiumApi).isInstanceOf(NativeQueryGuardiumApi.class);
   }
 
   @Test
@@ -44,13 +38,10 @@ class SafeguardAspectTest {
     var name = "testSafeguard";
     service.save(name);
 
-    assertEquals(1,
-        template.queryForObject("select max(id) from test where name = ?", int.class, name));
+    assertEquals(
+        1, template.queryForObject("select max(id) from test where name = ?", int.class, name));
 
-    var inOrder = inOrder(
-        aspect,
-        guardiumApi,
-        exampleEventDataSupplier);
+    var inOrder = inOrder(aspect, guardiumApi, exampleEventDataSupplier);
     inOrder.verify(aspect, times(1)).around(Mockito.any());
     inOrder.verify(guardiumApi, times(1)).start(Mockito.any(), Mockito.any());
     inOrder.verify(exampleEventDataSupplier, times(1)).get(Mockito.any(), Mockito.any());

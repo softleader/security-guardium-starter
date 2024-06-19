@@ -16,11 +16,11 @@ import org.aspectj.lang.reflect.MethodSignature;
 @RequiredArgsConstructor
 public class SafeguardAspect {
 
-  @NonNull
-  final GuardiumApi guardiumApi;
+  @NonNull final GuardiumApi guardiumApi;
 
-  @Around("@annotation(tw.com.softleader.data.security.guardium.annotation.Safeguard) || "
-      + "@within(tw.com.softleader.data.security.guardium.annotation.Safeguard)")
+  @Around(
+      "@annotation(tw.com.softleader.data.security.guardium.annotation.Safeguard) || "
+          + "@within(tw.com.softleader.data.security.guardium.annotation.Safeguard)")
   public Object around(final ProceedingJoinPoint pjp) throws Throwable {
     var signature = (MethodSignature) pjp.getSignature();
     guardiumApi.start(signature.getMethod(), pjp.getArgs());

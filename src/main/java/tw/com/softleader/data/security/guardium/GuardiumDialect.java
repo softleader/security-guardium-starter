@@ -7,17 +7,11 @@ package tw.com.softleader.data.security.guardium;
  */
 public enum GuardiumDialect {
 
-  /**
-   * 自動偵測方言
-   */
+  /** 自動偵測方言 */
   AUTO,
-  /**
-   * Oracle 方言
-   */
+  /** Oracle 方言 */
   ORACLE,
-  /**
-   * 預設的方言
-   */
+  /** 預設的方言 */
   DEFAULT,
   ;
 }

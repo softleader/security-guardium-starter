@@ -10,8 +10,7 @@ import tw.com.softleader.data.security.guardium.annotation.Safeguard;
 @RequiredArgsConstructor
 public class ExampleService {
 
-  @Autowired
-  private JdbcTemplate template;
+  @Autowired private JdbcTemplate template;
 
   @Transactional
   public void save(String name) {
