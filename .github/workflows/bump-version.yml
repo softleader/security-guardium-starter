@@ -69,7 +69,7 @@ jobs:
     if: ${{ !failure() }}
     needs: ensure-version-not-exists
     steps:
-      - id: ${{ github.event.repository.name }}-bump-version
+      - id: security-guardium-starter-bump-version
         uses: shihyuho/go-jenkins-trigger@v1
         with:
           jenkins-url: "${{ secrets.JENKINS_URL }}"
