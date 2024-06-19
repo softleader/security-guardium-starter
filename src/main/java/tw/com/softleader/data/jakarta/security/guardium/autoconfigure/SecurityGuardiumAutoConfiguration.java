@@ -1,4 +1,4 @@
-package tw.com.softleader.data.security.guardium.autoconfigure;
+package tw.com.softleader.data.jakarta.security.guardium.autoconfigure;
 
 import static org.apache.commons.lang3.exception.ExceptionUtils.getRootCauseMessage;
 
@@ -17,16 +17,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.jpa.EntityManagerFactoryInfo;
-import tw.com.softleader.data.security.guardium.GuardAppEvent;
-import tw.com.softleader.data.security.guardium.GuardAppEventSupplier;
-import tw.com.softleader.data.security.guardium.GuardiumApi;
-import tw.com.softleader.data.security.guardium.IBMSecurityGuardium10Api;
-import tw.com.softleader.data.security.guardium.JdbcNativeQuery;
-import tw.com.softleader.data.security.guardium.JpaNativeQuery;
-import tw.com.softleader.data.security.guardium.NativeQuery;
-import tw.com.softleader.data.security.guardium.NativeQueryGuardiumApi;
-import tw.com.softleader.data.security.guardium.OracleNativeQueryGuardiumApi;
-import tw.com.softleader.data.security.guardium.SafeguardAspect;
+import tw.com.softleader.data.jakarta.security.guardium.GuardAppEvent;
+import tw.com.softleader.data.jakarta.security.guardium.GuardAppEventSupplier;
+import tw.com.softleader.data.jakarta.security.guardium.GuardiumApi;
+import tw.com.softleader.data.jakarta.security.guardium.IBMSecurityGuardium10Api;
+import tw.com.softleader.data.jakarta.security.guardium.JdbcNativeQuery;
+import tw.com.softleader.data.jakarta.security.guardium.JpaNativeQuery;
+import tw.com.softleader.data.jakarta.security.guardium.NativeQuery;
+import tw.com.softleader.data.jakarta.security.guardium.NativeQueryGuardiumApi;
+import tw.com.softleader.data.jakarta.security.guardium.OracleNativeQueryGuardiumApi;
+import tw.com.softleader.data.jakarta.security.guardium.SafeguardAspect;
 
 /**
  * @author matt

@@ -1,11 +1,9 @@
-package tw.com.softleader.data.security.guardium.autoconfigure;
-
-import static tw.com.softleader.data.security.guardium.GuardiumDialect.AUTO;
+package tw.com.softleader.data.jakarta.security.guardium.autoconfigure;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import tw.com.softleader.data.security.guardium.GuardiumDialect;
+import tw.com.softleader.data.jakarta.security.guardium.GuardiumDialect;
 
 /**
  * @author matt
@@ -22,7 +20,7 @@ public class SecurityGuardiumProperties {
   private boolean enabled = true;
 
   /** Guardium dialect */
-  private GuardiumDialect dialect = AUTO;
+  private GuardiumDialect dialect = GuardiumDialect.AUTO;
 
   /**
    * 設定 sql statement timeout 秒數, -1 代表使用 driver 預設值

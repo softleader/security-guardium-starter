@@ -1,4 +1,4 @@
-package tw.com.softleader.data.security.guardium;
+package tw.com.softleader.data.jakarta.security.guardium;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcOperations;

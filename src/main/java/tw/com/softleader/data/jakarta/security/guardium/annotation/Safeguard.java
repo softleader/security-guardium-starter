@@ -1,4 +1,4 @@
-package tw.com.softleader.data.security.guardium.annotation;
+package tw.com.softleader.data.jakarta.security.guardium.annotation;
 
 import java.lang.annotation.*;
 

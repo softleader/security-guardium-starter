@@ -1,4 +1,4 @@
-package tw.com.softleader.data.security.guardium;
+package tw.com.softleader.data.jakarta.security.guardium;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

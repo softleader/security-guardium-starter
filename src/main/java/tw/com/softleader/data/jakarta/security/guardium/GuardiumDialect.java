@@ -1,4 +1,4 @@
-package tw.com.softleader.data.security.guardium;
+package tw.com.softleader.data.jakarta.security.guardium;
 
 /**
  * {@code GuardiumDialect} 定義 Guardium 使用的方言

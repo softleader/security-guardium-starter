@@ -22,15 +22,15 @@ Secure service w/ IBM Security Guardium
 
 ```xml
 <dependency>
-  <groupId>tw.com.softleader.data</groupId>
+  <groupId>tw.com.softleader.data.jakarta</groupId>
   <artifactId>security-guardium-starter</artifactId>
   <version>last-release-version</version>
 </dependency>
 ```
 
-此 Starter 預設啟動的 IBM Security Guardium 實作為版本 10, 實作為 [`IBMSecurityGuardium10Api`](./src/main/java/tw/com/softleader/data/security/guardium/IBMSecurityGuardium10Api.java), 請注意你的環境是否符合[規格](./docs)
+此 Starter 預設啟動的 IBM Security Guardium 實作為版本 10, 實作為 [`IBMSecurityGuardium10Api`](src/main/java/tw/com/softleader/data/jakarta/security/guardium/IBMSecurityGuardium10Api.java), 請注意你的環境是否符合[規格](./docs)
 
-[`GuardAppEventSupplier`](./src/main/java/tw/com/softleader/data/security/guardium/GuardAppEventSupplier.java) 是用來提供每一次要寫入 IBM Security Guardium 時的 runtime 資料, 專案在使用上必須提供實作, 並將之註冊成 Spring Bean, 範例如下:
+[`GuardAppEventSupplier`](src/main/java/tw/com/softleader/data/jakarta/security/guardium/GuardAppEventSupplier.java) 是用來提供每一次要寫入 IBM Security Guardium 時的 runtime 資料, 專案在使用上必須提供實作, 並將之註冊成 Spring Bean, 範例如下:
 
 ```java
 @Configuration

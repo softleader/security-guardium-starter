@@ -1,4 +1,4 @@
-package tw.com.softleader.data.security.guardium;
+package tw.com.softleader.data.jakarta.security.guardium;
 
 import java.util.StringJoiner;
 import lombok.AllArgsConstructor;

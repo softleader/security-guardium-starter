@@ -1,10 +1,10 @@
-package tw.com.softleader.data.security.guardium;
+package tw.com.softleader.data.jakarta.security.guardium;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
-import tw.com.softleader.data.security.guardium.annotation.Safeguard;
+import tw.com.softleader.data.jakarta.security.guardium.annotation.Safeguard;
 
 @Safeguard
 @RequiredArgsConstructor
