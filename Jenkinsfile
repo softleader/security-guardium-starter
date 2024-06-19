@@ -6,7 +6,7 @@ pipeline {
   agent {
     kubernetes {
       cloud 'SLKE'
-      defaultContainer 'maven'
+      defaultContainer 'maven-java17'
       yaml """
 kind: Pod
 spec:
