@@ -14,8 +14,22 @@ spec:
   securityContext:
     runAsUser: 0
   containers:
-  - name: maven
+  - name: maven-java17
     image: harbor.softleader.com.tw/library/maven:3-eclipse-temurin-17
+    imagePullPolicy: Always
+    command: ['cat']
+    tty: true
+    resources:
+      limits:
+        memory: "2.5Gi"
+        cpu: "2"
+    volumeMounts:
+    - name: m2
+      mountPath: /root/.m2
+    - name: dockersock
+      mountPath: /var/run/docker.sock
+  - name: maven-java21
+    image: harbor.softleader.com.tw/library/maven:3-eclipse-temurin-21
     imagePullPolicy: Always
     command: ['cat']
     tty: true
