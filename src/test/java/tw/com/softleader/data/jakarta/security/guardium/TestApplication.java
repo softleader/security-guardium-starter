@@ -1,12 +1,10 @@
-package tw.com.softleader.data.security.guardium;
+package tw.com.softleader.data.jakarta.security.guardium;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-/**
- * Entry point for test
- */
+/** Entry point for test */
 @SpringBootApplication
 class TestApplication {
 

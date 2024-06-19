@@ -1,4 +1,4 @@
-package tw.com.softleader.data.security.guardium.autoconfigure;
+package tw.com.softleader.data.jakarta.security.guardium.autoconfigure;
 
 import static org.apache.commons.lang3.exception.ExceptionUtils.getRootCauseMessage;
 
@@ -17,16 +17,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.jpa.EntityManagerFactoryInfo;
-import tw.com.softleader.data.security.guardium.GuardAppEvent;
-import tw.com.softleader.data.security.guardium.GuardAppEventSupplier;
-import tw.com.softleader.data.security.guardium.GuardiumApi;
-import tw.com.softleader.data.security.guardium.IBMSecurityGuardium10Api;
-import tw.com.softleader.data.security.guardium.JdbcNativeQuery;
-import tw.com.softleader.data.security.guardium.JpaNativeQuery;
-import tw.com.softleader.data.security.guardium.NativeQuery;
-import tw.com.softleader.data.security.guardium.NativeQueryGuardiumApi;
-import tw.com.softleader.data.security.guardium.OracleNativeQueryGuardiumApi;
-import tw.com.softleader.data.security.guardium.SafeguardAspect;
+import tw.com.softleader.data.jakarta.security.guardium.GuardAppEvent;
+import tw.com.softleader.data.jakarta.security.guardium.GuardAppEventSupplier;
+import tw.com.softleader.data.jakarta.security.guardium.GuardiumApi;
+import tw.com.softleader.data.jakarta.security.guardium.IBMSecurityGuardium10Api;
+import tw.com.softleader.data.jakarta.security.guardium.JdbcNativeQuery;
+import tw.com.softleader.data.jakarta.security.guardium.JpaNativeQuery;
+import tw.com.softleader.data.jakarta.security.guardium.NativeQuery;
+import tw.com.softleader.data.jakarta.security.guardium.NativeQueryGuardiumApi;
+import tw.com.softleader.data.jakarta.security.guardium.OracleNativeQueryGuardiumApi;
+import tw.com.softleader.data.jakarta.security.guardium.SafeguardAspect;
 
 /**
  * @author matt
@@ -35,7 +35,10 @@ import tw.com.softleader.data.security.guardium.SafeguardAspect;
 @EnableConfigurationProperties(SecurityGuardiumProperties.class)
 @EnableAspectJAutoProxy
 @RequiredArgsConstructor
-@ConditionalOnProperty(name = "softleader.security.guardium.enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(
+    name = "softleader.security.guardium.enabled",
+    havingValue = "true",
+    matchIfMissing = true)
 @Slf4j
 public class SecurityGuardiumAutoConfiguration {
 
@@ -46,12 +49,12 @@ public class SecurityGuardiumAutoConfiguration {
   @ConditionalOnMissingBean(GuardiumApi.class)
   GuardiumApi guardiumApi(GuardAppEventSupplier supplier, NativeQuery nativeQuery) {
     var dataSourceRef = properties.getDataSourceRef();
-    log.info("Retrieving dataSource bean '{}' for {}", dataSourceRef,
+    log.info(
+        "Retrieving dataSource bean '{}' for {}",
+        dataSourceRef,
         GuardAppEvent.class.getSimpleName());
     var ds = factory.getBean(dataSourceRef, DataSource.class);
-    var guardiumApi = (NativeQueryGuardiumApi) new IBMSecurityGuardium10Api(
-        supplier,
-        nativeQuery);
+    var guardiumApi = (NativeQueryGuardiumApi) new IBMSecurityGuardium10Api(supplier, nativeQuery);
     switch (properties.getDialect()) {
       case ORACLE:
         log.info("Initializing OracleNativeQueryGuardiumApi");
@@ -75,7 +78,8 @@ public class SecurityGuardiumAutoConfiguration {
       log.info("Initializing default NativeQueryGuardiumApi");
       return guardiumApi;
     } catch (SQLException e) {
-      log.warn("Failed to auto-detected GuardiumApi type, falling back to default: {}",
+      log.warn(
+          "Failed to auto-detected GuardiumApi type, falling back to default: {}",
           getRootCauseMessage(e));
       return guardiumApi;
     }
@@ -85,8 +89,8 @@ public class SecurityGuardiumAutoConfiguration {
   @ConditionalOnBean(EntityManagerFactoryInfo.class)
   @ConditionalOnMissingBean(NativeQuery.class)
   NativeQuery jpaNativeQuery(EntityManagerFactoryInfo factory) {
-    log.info("Initializing JPA NativeQuery for persistence unit '{}'",
-        factory.getPersistenceUnitName());
+    log.info(
+        "Initializing JPA NativeQuery for persistence unit '{}'", factory.getPersistenceUnitName());
     return new JpaNativeQuery(factory.getNativeEntityManagerFactory());
   }
 

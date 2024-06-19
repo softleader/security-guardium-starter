@@ -1,7 +1,7 @@
-package tw.com.softleader.data.security.guardium;
+package tw.com.softleader.data.jakarta.security.guardium;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.orm.jpa.EntityManagerFactoryUtils;
 

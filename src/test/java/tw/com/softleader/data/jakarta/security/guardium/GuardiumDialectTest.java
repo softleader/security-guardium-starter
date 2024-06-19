@@ -1,4 +1,4 @@
-package tw.com.softleader.data.security.guardium;
+package tw.com.softleader.data.jakarta.security.guardium;
 
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 
@@ -10,23 +10,19 @@ import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
-import tw.com.softleader.data.security.guardium.autoconfigure.SecurityGuardiumAutoConfiguration;
+import tw.com.softleader.data.jakarta.security.guardium.autoconfigure.SecurityGuardiumAutoConfiguration;
 
-@JdbcTest(properties = {
-    "security.guardium.dialect=oracle"
-})
+@JdbcTest(properties = {"security.guardium.dialect=oracle"})
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
 @ImportAutoConfiguration(classes = SecurityGuardiumAutoConfiguration.class)
 class GuardiumDialectTest {
 
-  @Autowired
-  GuardiumApi guardiumApi;
+  @Autowired GuardiumApi guardiumApi;
 
   @DisplayName("手動指定成 oracle 方言")
   @Test
   @Transactional
   void manuallySetOracleDialect() {
-    Assertions.assertThat(guardiumApi)
-        .isInstanceOf(OracleNativeQueryGuardiumApi.class);
+    Assertions.assertThat(guardiumApi).isInstanceOf(OracleNativeQueryGuardiumApi.class);
   }
 }

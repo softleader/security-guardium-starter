@@ -1,4 +1,4 @@
-package tw.com.softleader.data.security.guardium;
+package tw.com.softleader.data.jakarta.security.guardium;
 
 import java.lang.reflect.Method;
 import lombok.NonNull;
@@ -7,8 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OracleNativeQueryGuardiumApi extends NativeQueryGuardiumApi {
 
-  @NonNull
-  final NativeQueryGuardiumApi delegate;
+  @NonNull final NativeQueryGuardiumApi delegate;
 
   @Override
   public String startSql(Method method, Object[] args) {

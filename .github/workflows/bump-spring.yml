@@ -1,0 +1,110 @@
+# A GitHub action to bump Spring to the latest version.
+name: Bump Spring
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # In UTC time, 8:00 In Taipei time
+  workflow_dispatch:
+
+jobs:
+  current-version:
+    runs-on: [self-hosted, ubuntu-jammy]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: "${{ github.ref_name }}"
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - id: get-current-boot-version
+        run: echo "version=$(make spring-boot-version)" >> "$GITHUB_OUTPUT"
+      - id: get-current-cloud-version
+        run: echo "version=$(make spring-cloud-version)" >> "$GITHUB_OUTPUT"
+    outputs:
+      spring-boot: ${{ steps.get-current-boot-version.outputs.version }}
+      spring-cloud: ${{ steps.get-current-cloud-version.outputs.version }}
+
+  latest-version:
+    runs-on: [self-hosted, ubuntu-jammy]
+    steps:
+      - id: get-latest-version
+        uses: shihyuho/go-spring-version@v1
+        with:
+          boot-version: "~${{ github.ref_name }}"
+          dependencies: "cloud-starter"
+    outputs:
+      spring-boot: ${{ steps.get-latest-version.outputs.spring-boot }}
+      spring-cloud: ${{ steps.get-latest-version.outputs.spring-cloud }}
+
+  compare-boot-version:
+    runs-on: [self-hosted, ubuntu-jammy]
+    needs: [latest-version, current-version]
+    steps:
+      - id: semver-compare
+        uses: madhead/semver-utils@latest
+        with:
+          version: ${{ needs.latest-version.outputs.spring-boot }}
+          compare-to: ${{ needs.current-version.outputs.spring-boot }}
+    outputs:
+      comparison-result: ${{ steps.semver-compare.outputs.comparison-result }}
+
+  compare-cloud-version:
+    runs-on: [self-hosted, ubuntu-jammy]
+    needs: [latest-version, current-version]
+    steps:
+      - id: semver-compare
+        uses: madhead/semver-utils@latest
+        with:
+          version: ${{ needs.latest-version.outputs.spring-cloud }}
+          compare-to: ${{ needs.current-version.outputs.spring-cloud }}
+    outputs:
+      comparison-result: ${{ steps.semver-compare.outputs.comparison-result }}
+
+  bump-spring:
+    runs-on: [self-hosted, ubuntu-jammy]
+    permissions:
+      contents: write
+      pull-requests: write
+    needs: [latest-version, current-version, compare-boot-version, compare-cloud-version]
+    if: "${{ needs.compare-boot-version.outputs.comparison-result == '>' || needs.compare-cloud-version.outputs.comparison-result == '>' }}"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: "${{ github.ref_name }}"
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Bump version
+        run: make bump-spring BOOT=${{ needs.latest-version.outputs.spring-boot }} CLOUD=${{ needs.latest-version.outputs.spring-cloud }}
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore: bump spring-boot from ${{ needs.current-version.outputs.spring-boot }} to ${{ needs.latest-version.outputs.spring-boot }}"
+          title: "Bump spring-boot from ${{ needs.current-version.outputs.spring-boot }} to ${{ needs.latest-version.outputs.spring-boot }}"
+          committer: bot 👾 <bot-noreply@softleader.com.tw>
+          author: bot 👾 <bot-noreply@softleader.com.tw>
+          body: >-
+            Bumps [spring-projects/spring-boot](https://github.com/spring-projects/spring-boot)
+            from ${{ needs.current-version.outputs.spring-boot }} to ${{ needs.latest-version.outputs.spring-boot }}
+          labels: "type: dependency-upgrade"
+          branch: "bot/${{ github.ref_name }}/spring-boot-${{ needs.current-version.outputs.spring-boot }}-${{ needs.latest-version.outputs.spring-boot }}"
+          delete-branch: true
+      - name: Enable Auto-merge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        run: gh pr merge --squash --auto "${{ steps.cpr.outputs.pull-request-number }}"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  keepalive:
+    runs-on: [self-hosted, ubuntu-jammy]
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: gautamkrishnar/keepalive-workflow@v2

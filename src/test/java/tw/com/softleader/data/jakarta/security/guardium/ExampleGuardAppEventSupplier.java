@@ -1,4 +1,4 @@
-package tw.com.softleader.data.security.guardium;
+package tw.com.softleader.data.jakarta.security.guardium;
 
 import java.lang.reflect.Method;
 import lombok.Data;
@@ -10,10 +10,6 @@ public class ExampleGuardAppEventSupplier implements GuardAppEventSupplier {
 
   @Override
   public GuardAppEvent get(Method method, Object[] args) {
-    return GuardAppEvent.builder()
-        .userName("XXX")
-        .type(method.toString())
-        .strValue("ZZZ")
-        .build();
+    return GuardAppEvent.builder().userName("XXX").type(method.toString()).strValue("ZZZ").build();
   }
 }

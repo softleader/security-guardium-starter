@@ -1,4 +1,4 @@
-package tw.com.softleader.data.security.guardium;
+package tw.com.softleader.data.jakarta.security.guardium;
 
 /**
  * {@code GuardiumDialect} 定義 Guardium 使用的方言
@@ -7,17 +7,11 @@ package tw.com.softleader.data.security.guardium;
  */
 public enum GuardiumDialect {
 
-  /**
-   * 自動偵測方言
-   */
+  /** 自動偵測方言 */
   AUTO,
-  /**
-   * Oracle 方言
-   */
+  /** Oracle 方言 */
   ORACLE,
-  /**
-   * 預設的方言
-   */
+  /** 預設的方言 */
   DEFAULT,
   ;
 }

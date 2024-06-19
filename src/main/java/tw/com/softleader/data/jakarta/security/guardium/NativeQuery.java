@@ -1,4 +1,4 @@
-package tw.com.softleader.data.security.guardium;
+package tw.com.softleader.data.jakarta.security.guardium;
 
 /**
  * 封裝 JPA or JDBC 的實作
@@ -7,8 +7,6 @@ package tw.com.softleader.data.security.guardium;
  */
 public interface NativeQuery {
 
-  /**
-   * Executing SQL statement
-   */
+  /** Executing SQL statement */
   void execute(String sql);
 }

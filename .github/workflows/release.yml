@@ -1,23 +1,38 @@
-name: release
+# 發佈版本
+name: Publish a New Release
 
 on:
-  # https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows#release
-  release:
-    types: [prereleased]
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+  pull_request:
+    branches:
+      - 3.x
+    types:
+      - closed
 
 jobs:
-  release-artifact:
-    runs-on: ubuntu-latest
+  get-version:
+    runs-on: [self-hosted, ubuntu-jammy]
+    if: startsWith(github.head_ref, 'bot/bump-version')
     steps:
-      - id: security-guardium-starter-release
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - id: get-version
+        run: echo "version=$(make version)" >> "$GITHUB_OUTPUT"
+    outputs:
+      version: ${{ steps.get-version.outputs.version }}
+  trigger-jenkins:
+    runs-on: [self-hosted, ubuntu-jammy]
+    needs: get-version
+    steps:
+      - id: ${{ github.event.repository.name }}-release
         uses: shihyuho/go-jenkins-trigger@v1
         with:
           jenkins-url: "${{ secrets.JENKINS_URL }}"
           jenkins-user: "${{ secrets.JENKINS_USER }}"
           jenkins-pat: "${{ secrets.JENKINS_PAT }}"
-          insecure: "true"
           job: "${{ github.action }}"
-          params: "ref=${{ github.ref }}"
+          params: "ref=${{ github.sha }},tag=${{ needs.get-version.outputs.version }},"
           wait: false

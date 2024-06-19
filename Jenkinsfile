@@ -1,10 +1,12 @@
 #!/usr/bin/env groovy
 
+def javaVersions = ['17', '21']
+
 pipeline {
   agent {
     kubernetes {
       cloud 'SLKE'
-      defaultContainer 'maven'
+      defaultContainer 'maven-java17'
       yaml """
 kind: Pod
 spec:
@@ -12,8 +14,22 @@ spec:
   securityContext:
     runAsUser: 0
   containers:
-  - name: maven
-    image: harbor.softleader.com.tw/library/maven:3-eclipse-temurin-11
+  - name: maven-java17
+    image: harbor.softleader.com.tw/library/maven:3-eclipse-temurin-17
+    imagePullPolicy: Always
+    command: ['cat']
+    tty: true
+    resources:
+      limits:
+        memory: "2.5Gi"
+        cpu: "2"
+    volumeMounts:
+    - name: m2
+      mountPath: /root/.m2
+    - name: dockersock
+      mountPath: /var/run/docker.sock
+  - name: maven-java21
+    image: harbor.softleader.com.tw/library/maven:3-eclipse-temurin-21
     imagePullPolicy: Always
     command: ['cat']
     tty: true
@@ -81,9 +97,18 @@ spec:
       }
     }
 
-    stage('Unit Testing') {
+    stage('Matrix Testing') {
       steps {
-        sh "make test"
+        script {
+          for (int j = 0; j < javaVersions.size(); j++) {
+            def java = javaVersions[j]
+            stage("Matrix - JAVA = ${java}") {
+              container("maven-java${java}") {
+                sh "make test JAVA=${java}"
+              }
+            }
+          }
+        }
       }
       post {
         always {
