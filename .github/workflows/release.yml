@@ -27,7 +27,7 @@ jobs:
     runs-on: [self-hosted, ubuntu-jammy]
     needs: get-version
     steps:
-      - id: kapok-release
+      - id: ${{ github.event.repository.name }}-release
         uses: shihyuho/go-jenkins-trigger@v1
         with:
           jenkins-url: "${{ secrets.JENKINS_URL }}"
