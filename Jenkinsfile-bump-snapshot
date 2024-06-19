@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-currentBuild.description = "${ref} -> ${tag}"
+currentBuild.description = "${ref} -> ${version}-SNAPSHOT"
 // https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
 def semverPattern = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/
 
@@ -89,56 +89,36 @@ spec:
 
     stage ('Preflight Checks') {
       steps {
-        container('git') {
-          script {
-            def isSemVer = ("${tag}" ==~ semverPattern)
-            if (!isSemVer) {
-              error "Tag must matches semantic versioning 2 (https://semver.org/) but got: ${tag}";
-            }
-            TAG_EXISTS = sh(
-              script: 'gh release view ${tag} --json name',
-              returnStatus: true
-            )
-            def tagExists = ("${TAG_EXISTS}" == "0")
-            if (tagExists) {
-              error "Tag ${tag} already exists";
-            }
+        script {
+          def isSemVer = ("${version}" ==~ semverPattern)
+          if (!isSemVer) {
+            error "Tag must matches semantic versioning 2 (https://semver.org/) but got: ${version}";
           }
         }
-      }
-    }
-
-    stage ('Create Release') {
-      steps {
+        sh "make format"
         container('git') {
-          sh "gh release create ${tag} --target ${ref} --generate-notes --draft"
+          sh '[ ! -z "$(git status -s)" ] && echo "排版檢查不通過!" && exit 1 || echo "Good to go!"'
         }
       }
     }
 
-    stage ('Publish Release') {
+    stage('Unit Testing') {
       steps {
-        sh "make release"
-        dir("initializr") {
-          sh "make install build"
-        }
+        sh "make test"
       }
       post {
-        success {
-          script {
-            env.SPRING_BOOT = sh(
-              script: 'make spring-boot-version',
-              returnStdout: true
-            ).trim()
-            container('git') {
-              sh """
-              gh release view ${tag} --json body --jq .body > node.md
-              echo '## 📔 Spring References\n\n- [Spring Boot $SPRING_BOOT](https://docs.spring.io/spring-boot/docs/$SPRING_BOOT/reference/html)' >> node.md
-              gh release edit ${tag} --draft=false --latest --notes-file node.md
-              """
-            }
-          }
+        always {
+          junit "**/target/surefire-reports/**/*.xml"
         }
+      }
+    }
+
+    stage ('Publish Snapshot') {
+      steps {
+        sh """
+        make new-version VERSION=${version}-SNAPSHOT
+        make release
+        """
       }
     }
   }

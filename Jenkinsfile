@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
+def javaVersions = ['17', '21']
+
 pipeline {
   agent {
     kubernetes {
@@ -13,7 +15,7 @@ spec:
     runAsUser: 0
   containers:
   - name: maven
-    image: harbor.softleader.com.tw/library/maven:3-eclipse-temurin-11
+    image: harbor.softleader.com.tw/library/maven:3-eclipse-temurin-17
     imagePullPolicy: Always
     command: ['cat']
     tty: true
@@ -81,9 +83,18 @@ spec:
       }
     }
 
-    stage('Unit Testing') {
+    stage('Matrix Testing') {
       steps {
-        sh "make test"
+        script {
+          for (int j = 0; j < javaVersions.size(); j++) {
+            def java = javaVersions[j]
+            stage("Matrix - JAVA = ${java}") {
+              container("maven-java${java}") {
+                sh "make test JAVA=${java}"
+              }
+            }
+          }
+        }
       }
       post {
         always {
