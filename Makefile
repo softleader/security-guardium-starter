@@ -35,7 +35,7 @@ install: clean ## Install project to local repository w/o unit testing.
 	mvn install -e -DskipTests -Prelease $(call java_version)
 
 spring-boot-version: ## Get current Spring Boot version
-	@mvn help:evaluate -Dexpression=spring-boot.version -DforceStdout -q -pl bom
+	@mvn help:evaluate -Dexpression=spring-boot.version -DforceStdout -q
 
 bump-spring: bump-spring-boot ## Bump Spring versions
 
