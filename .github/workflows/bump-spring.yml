@@ -20,11 +20,8 @@ jobs:
           java-version: '17'
       - id: get-current-boot-version
         run: echo "version=$(make spring-boot-version)" >> "$GITHUB_OUTPUT"
-      - id: get-current-cloud-version
-        run: echo "version=$(make spring-cloud-version)" >> "$GITHUB_OUTPUT"
     outputs:
-      spring-boot: ${{ steps.get-current-boot-version.outputs.version }}
-      spring-cloud: ${{ steps.get-current-cloud-version.outputs.version }}
+      spring-boot: ${{ steps.get-current-boot-version.outputs.version }}=
 
   latest-version:
     runs-on: [self-hosted, ubuntu-jammy]
@@ -33,10 +30,8 @@ jobs:
         uses: shihyuho/go-spring-version@v1
         with:
           boot-version: "~${{ github.ref_name }}"
-          dependencies: "cloud-starter"
     outputs:
       spring-boot: ${{ steps.get-latest-version.outputs.spring-boot }}
-      spring-cloud: ${{ steps.get-latest-version.outputs.spring-cloud }}
 
   compare-boot-version:
     runs-on: [self-hosted, ubuntu-jammy]
@@ -50,25 +45,13 @@ jobs:
     outputs:
       comparison-result: ${{ steps.semver-compare.outputs.comparison-result }}
 
-  compare-cloud-version:
-    runs-on: [self-hosted, ubuntu-jammy]
-    needs: [latest-version, current-version]
-    steps:
-      - id: semver-compare
-        uses: madhead/semver-utils@latest
-        with:
-          version: ${{ needs.latest-version.outputs.spring-cloud }}
-          compare-to: ${{ needs.current-version.outputs.spring-cloud }}
-    outputs:
-      comparison-result: ${{ steps.semver-compare.outputs.comparison-result }}
-
   bump-spring:
     runs-on: [self-hosted, ubuntu-jammy]
     permissions:
       contents: write
       pull-requests: write
-    needs: [latest-version, current-version, compare-boot-version, compare-cloud-version]
-    if: "${{ needs.compare-boot-version.outputs.comparison-result == '>' || needs.compare-cloud-version.outputs.comparison-result == '>' }}"
+    needs: [latest-version, current-version, compare-boot-version]
+    if: "${{ needs.compare-boot-version.outputs.comparison-result == '>' }}"
     steps:
       - uses: actions/checkout@v4
         with:
@@ -79,7 +62,7 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
       - name: Bump version
-        run: make bump-spring BOOT=${{ needs.latest-version.outputs.spring-boot }} CLOUD=${{ needs.latest-version.outputs.spring-cloud }}
+        run: make bump-spring BOOT=${{ needs.latest-version.outputs.spring-boot }}
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v6
