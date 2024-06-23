@@ -21,13 +21,11 @@ spec:
     tty: true
     resources:
       limits:
-        memory: "2.5Gi"
+        memory: "1Gi"
         cpu: "2"
     volumeMounts:
     - name: m2
       mountPath: /root/.m2
-    - name: dockersock
-      mountPath: /var/run/docker.sock
   - name: maven-java21
     image: harbor.softleader.com.tw/library/maven:3-eclipse-temurin-21
     imagePullPolicy: Always
@@ -35,13 +33,11 @@ spec:
     tty: true
     resources:
       limits:
-        memory: "2.5Gi"
+        memory: "1Gi"
         cpu: "2"
     volumeMounts:
     - name: m2
       mountPath: /root/.m2
-    - name: dockersock
-      mountPath: /var/run/docker.sock
   - name: git
     image: alpine/git:v2.32.0
     command: ['cat']
@@ -54,9 +50,6 @@ spec:
   - name: m2
     persistentVolumeClaim:
       claimName: m2-claim
-  - name: dockersock
-    hostPath:
-      path: /var/run/docker.sock
 """
     }
   }
@@ -122,9 +115,9 @@ spec:
     failure {
       script {
         if (env.BRANCH_NAME == 'main'
-            // 若短時間太密集的 push, 之前的 job 會被 jenkins 中斷, 這樣就可能會就連第一步都還沒執行的狀況, 但也算是失敗
-            // 然而取得 git 資訊就在第一步, 所以至少要第一步都有執行完才發佈 slack 吧
-            && env.LAST_COMMIT_AUTHOR_NAME && env.LAST_COMMIT_AUTHOR_EMAIL && env.LAST_COMMIT_TIME) {
+          // 若短時間太密集的 push, 之前的 job 會被 jenkins 中斷, 這樣就可能會就連第一步都還沒執行的狀況, 但也算是失敗
+          // 然而取得 git 資訊就在第一步, 所以至少要第一步都有執行完才發佈 slack 吧
+          && env.LAST_COMMIT_AUTHOR_NAME && env.LAST_COMMIT_AUTHOR_EMAIL && env.LAST_COMMIT_TIME) {
           slackSend(
             color: "danger",
             channel: "dept-rd",

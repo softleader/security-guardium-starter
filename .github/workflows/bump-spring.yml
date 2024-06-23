@@ -8,7 +8,7 @@ on:
 
 jobs:
   current-version:
-    runs-on: [self-hosted, ubuntu-jammy]
+    runs-on: [ self-hosted, ubuntu-jammy ]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -18,24 +18,25 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - id: get-current-boot-version
+      - id: get-current-version
         run: echo "version=$(make spring-boot-version)" >> "$GITHUB_OUTPUT"
+      - uses: gautamkrishnar/keepalive-workflow@v1
     outputs:
-      spring-boot: ${{ steps.get-current-boot-version.outputs.version }}=
+      spring-boot: ${{ steps.get-current-version.outputs.version }}
 
   latest-version:
-    runs-on: [self-hosted, ubuntu-jammy]
+    runs-on: [ self-hosted, ubuntu-jammy ]
     steps:
       - id: get-latest-version
         uses: shihyuho/go-spring-version@v1
         with:
-          boot-version: "~${{ github.ref_name }}"
+          boot-version: "~3.x"
     outputs:
       spring-boot: ${{ steps.get-latest-version.outputs.spring-boot }}
 
-  compare-boot-version:
-    runs-on: [self-hosted, ubuntu-jammy]
-    needs: [latest-version, current-version]
+  compare-version:
+    runs-on: [ self-hosted, ubuntu-jammy ]
+    needs: [ latest-version, current-version ]
     steps:
       - id: semver-compare
         uses: madhead/semver-utils@latest
@@ -46,12 +47,12 @@ jobs:
       comparison-result: ${{ steps.semver-compare.outputs.comparison-result }}
 
   bump-spring:
-    runs-on: [self-hosted, ubuntu-jammy]
+    runs-on: [ self-hosted, ubuntu-jammy ]
     permissions:
       contents: write
       pull-requests: write
-    needs: [latest-version, current-version, compare-boot-version]
-    if: "${{ needs.compare-boot-version.outputs.comparison-result == '>' }}"
+    needs: [ latest-version, current-version, compare-version ]
+    if: "${{ needs.compare-version.outputs.comparison-result == '>' }}"
     steps:
       - uses: actions/checkout@v4
         with:
@@ -62,7 +63,7 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
       - name: Bump version
-        run: make bump-spring BOOT=${{ needs.latest-version.outputs.spring-boot }}
+        run: make bump-spring-boot BOOT=${{ needs.latest-version.outputs.spring-boot }}
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v6
@@ -84,7 +85,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
 
   keepalive:
-    runs-on: [self-hosted, ubuntu-jammy]
+    runs-on: [ self-hosted, ubuntu-jammy ]
     permissions:
       contents: read
       actions: write
