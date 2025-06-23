@@ -1,5 +1,7 @@
 package tw.com.softleader.data.jakarta.security.guardium.autoconfigure;
 
+import static tw.com.softleader.data.jakarta.security.guardium.autoconfigure.SecurityGuardiumProperties.GUARDIUM_PREFIX;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,10 +12,13 @@ import tw.com.softleader.data.jakarta.security.guardium.GuardiumDialect;
  */
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "security.guardium")
+@ConfigurationProperties(prefix = GUARDIUM_PREFIX)
 public class SecurityGuardiumProperties {
 
+  static final String GUARDIUM_PREFIX = "security.guardium";
+
   private static final int DEFAULT_QUERY_TIMEOUT_SECOND = 10;
+
   private static final String DEFAULT_DATA_SOURCE_REF = "dataSource";
 
   /** Enable Security Guardium for the application. */

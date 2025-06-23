@@ -1,6 +1,7 @@
 package tw.com.softleader.data.jakarta.security.guardium.autoconfigure;
 
 import static org.apache.commons.lang3.exception.ExceptionUtils.getRootCauseMessage;
+import static tw.com.softleader.data.jakarta.security.guardium.autoconfigure.SecurityGuardiumProperties.GUARDIUM_PREFIX;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -36,7 +37,8 @@ import tw.com.softleader.data.jakarta.security.guardium.SafeguardAspect;
 @EnableAspectJAutoProxy
 @RequiredArgsConstructor
 @ConditionalOnProperty(
-    name = "softleader.security.guardium.enabled",
+    prefix = GUARDIUM_PREFIX,
+    name = "enabled",
     havingValue = "true",
     matchIfMissing = true)
 @Slf4j
