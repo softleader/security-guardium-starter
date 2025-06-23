@@ -4,7 +4,7 @@
 
   <groupId>tw.com.softleader.data.jakarta</groupId>
   <artifactId>security-guardium-starter</artifactId>
-  <version>3.0.0</version>
+  <version>3.5.0</version>
 
   <description>Secure service with IBM Security Guardium</description>
   <inceptionYear>2022</inceptionYear>
