@@ -11,7 +11,7 @@ on:
 
 jobs:
   get-version:
-    runs-on: [ self-hosted, ubuntu-jammy ]
+    runs-on: ubuntu-latest
     if: startsWith(github.head_ref, 'bot/bump-version')
     steps:
       - uses: actions/checkout@v4
@@ -24,7 +24,7 @@ jobs:
     outputs:
       version: ${{ steps.get-version.outputs.version }}
   trigger-jenkins:
-    runs-on: [ self-hosted, ubuntu-jammy ]
+    runs-on: ubuntu-latest
     needs: get-version
     steps:
       - id: security-guardium-starter-release

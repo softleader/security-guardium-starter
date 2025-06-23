@@ -18,7 +18,7 @@ on:
 
 jobs:
   auto-bump:
-    runs-on: [ self-hosted, ubuntu-jammy ]
+    runs-on: ubuntu-latest
     if: inputs.auto-bump != 'no'
     steps:
       - uses: actions/checkout@v4
@@ -35,7 +35,7 @@ jobs:
     outputs:
       bumped_version: ${{ steps.bump.outputs[inputs.auto-bump] }}
   ensure-version-not-exists:
-    runs-on: [ self-hosted, ubuntu-jammy ]
+    runs-on: ubuntu-latest
     if: ${{ !failure() }}
     needs: auto-bump
     outputs:
@@ -65,7 +65,7 @@ jobs:
             exit 1;
           fi
   trigger-jenkins:
-    runs-on: [ self-hosted, ubuntu-jammy ]
+    runs-on: ubuntu-latest
     if: ${{ !failure() }}
     needs: ensure-version-not-exists
     steps:
