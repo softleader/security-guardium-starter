@@ -109,9 +109,6 @@ spec:
     stage('Publish Release') {
       steps {
         sh "make release"
-        dir("initializr") {
-          sh "make install build"
-        }
       }
       post {
         success {
