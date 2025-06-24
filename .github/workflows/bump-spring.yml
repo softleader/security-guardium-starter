@@ -77,11 +77,11 @@ jobs:
           labels: "type: dependency-upgrade"
           branch: "bot/${{ github.ref_name }}/spring-boot-${{ needs.current-version.outputs.spring-boot }}-${{ needs.latest-version.outputs.spring-boot }}/${{ github.run_id }}"
           delete-branch: true
-      - name: Enable Auto-merge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        run: gh pr merge --squash --auto "${{ steps.cpr.outputs.pull-request-number }}"
-        env:
-          GH_TOKEN: ${{ github.token }}
+#      - name: Enable Auto-merge
+#        if: steps.cpr.outputs.pull-request-operation == 'created'
+#        run: gh pr merge --squash --auto "${{ steps.cpr.outputs.pull-request-number }}"
+#        env:
+#          GH_TOKEN: ${{ github.token }}
 
   keepalive:
     runs-on: ubuntu-latest
