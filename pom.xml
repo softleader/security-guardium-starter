@@ -47,7 +47,7 @@
     <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
     <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
 
-    <spring-boot.version>3.5.3</spring-boot.version>
+    <spring-boot.version>3.5.6</spring-boot.version>
 
     <softleader.public.repository>https://repo.softleader.com.tw/repository/maven-public/</softleader.public.repository>
     <softleader.releases.repository>https://repo.softleader.com.tw/repository/maven-releases/</softleader.releases.repository>
