@@ -20,19 +20,6 @@
     <url>https://github.com/softleader/security-guardium-starter</url>
   </scm>
 
-  <distributionManagement>
-    <repository>
-      <id>releases</id>
-      <name>SoftLeader Release</name>
-      <url>${softleader.releases.repository}</url>
-    </repository>
-    <snapshotRepository>
-      <id>snapshots</id>
-      <name>SoftLeader Snapshots</name>
-      <url>${softleader.snapshots.repository}</url>
-    </snapshotRepository>
-  </distributionManagement>
-
   <properties>
     <java.version>17</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -49,9 +36,6 @@
 
     <spring-boot.version>3.5.3</spring-boot.version>
 
-    <softleader.public.repository>https://repo.softleader.com.tw/repository/maven-public/</softleader.public.repository>
-    <softleader.releases.repository>https://repo.softleader.com.tw/repository/maven-releases/</softleader.releases.repository>
-    <softleader.snapshots.repository>https://repo.softleader.com.tw/repository/maven-snapshots/</softleader.snapshots.repository>
     <spring-snapshot.repository>https://repo.spring.io/snapshot</spring-snapshot.repository>
     <spring-milestones.repository>https://repo.spring.io/milestone</spring-milestones.repository>
     <spring-release.repository>https://repo.spring.io/release</spring-release.repository>
@@ -133,11 +117,6 @@
   </dependencies>
 
   <repositories>
-    <repository>
-      <id>softleader-public</id>
-      <name>SoftLeader Public</name>
-      <url>${softleader.public.repository}</url>
-    </repository>
     <repository>
       <snapshots>
         <enabled>false</enabled>
