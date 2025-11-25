@@ -59,4 +59,4 @@ endif
 	mvn versions:commit
 
 release: ## Pack w/o unit testing, and deploy to remote repository.
-	mvn clean deploy -e -Prelease -DskipTests
+	mvn clean deploy -e -Prelease -DskipTests -DaltReleaseDeploymentRepository=releases::https://repo.softleader.com.tw/repository/maven-releases/ -DaltSnapshotDeploymentRepository=snapshots::https://repo.softleader.com.tw/repository/maven-snapshots/
