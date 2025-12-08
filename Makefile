@@ -58,5 +58,5 @@ endif
 	mvn versions:set -DnewVersion=$(VERSION)
 	mvn versions:commit
 
-release: ## Pack w/o unit testing, and deploy to remote repository.
-	mvn clean deploy -e -Prelease -DskipTests -DaltReleaseDeploymentRepository=releases::https://repo.softleader.com.tw/repository/maven-releases/ -DaltSnapshotDeploymentRepository=snapshots::https://repo.softleader.com.tw/repository/maven-snapshots/
+release: clean ## Pack w/o unit testing, and deploy to remote repository.
+	mvn deploy -e -DskipTests -Prelease $(call java_version)
