@@ -45,7 +45,7 @@
     <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
     <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
 
-    <spring-boot.version>3.5.3</spring-boot.version>
+    <spring-boot.version>3.5.10</spring-boot.version>
 
     <spring-snapshot.repository>https://repo.spring.io/snapshot</spring-snapshot.repository>
     <spring-milestones.repository>https://repo.spring.io/milestone</spring-milestones.repository>
