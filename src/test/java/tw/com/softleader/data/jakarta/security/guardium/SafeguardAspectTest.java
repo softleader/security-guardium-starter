@@ -3,48 +3,48 @@ package tw.com.softleader.data.jakarta.security.guardium;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.times;
-import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.annotation.DirtiesContext;
-import tw.com.softleader.data.jakarta.security.guardium.autoconfigure.SecurityGuardiumAutoConfiguration;
+import tw.com.softleader.data.jakarta.security.guardium.EmbeddedJdbcSupport.SpyBeanPostProcessor;
 
-@JdbcTest
-@DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
-@ImportAutoConfiguration(classes = SecurityGuardiumAutoConfiguration.class)
 class SafeguardAspectTest {
-
-  @SpyBean ExampleGuardAppEventSupplier exampleEventDataSupplier;
-  @SpyBean SafeguardAspect aspect;
-  @Autowired ExampleService service;
-  @Autowired JdbcTemplate template;
-  @SpyBean GuardiumApi guardiumApi;
-
-  @BeforeEach
-  void setup() {
-    Assertions.assertThat(guardiumApi).isInstanceOf(NativeQueryGuardiumApi.class);
-  }
 
   @Test
   void testSafeguard() throws Throwable {
-    var name = "testSafeguard";
-    service.save(name);
+    EmbeddedJdbcSupport.runner()
+        .withBean(
+            SpyBeanPostProcessor.class,
+            () ->
+                new SpyBeanPostProcessor(
+                    ExampleGuardAppEventSupplier.class, SafeguardAspect.class, GuardiumApi.class))
+        .withBean(ExampleGuardAppEventSupplier.class, ExampleGuardAppEventSupplier::new)
+        .withBean(ExampleService.class, ExampleService::new)
+        .run(
+            context -> {
+              var exampleEventDataSupplier = context.getBean(ExampleGuardAppEventSupplier.class);
+              var aspect = context.getBean(SafeguardAspect.class);
+              var service = context.getBean(ExampleService.class);
+              var template = context.getBean(JdbcTemplate.class);
+              var guardiumApi = context.getBean(GuardiumApi.class);
 
-    assertEquals(
-        1, template.queryForObject("select max(id) from test where name = ?", int.class, name));
+              Assertions.assertThat(guardiumApi).isInstanceOf(NativeQueryGuardiumApi.class);
 
-    var inOrder = inOrder(aspect, guardiumApi, exampleEventDataSupplier);
-    inOrder.verify(aspect, times(1)).around(Mockito.any());
-    inOrder.verify(guardiumApi, times(1)).start(Mockito.any(), Mockito.any());
-    inOrder.verify(exampleEventDataSupplier, times(1)).get(Mockito.any(), Mockito.any());
-    inOrder.verify(guardiumApi, times(1)).released();
+              var name = "testSafeguard";
+              service.save(name);
+
+              assertEquals(
+                  1,
+                  template.queryForObject(
+                      "select max(id) from test where name = ?", int.class, name));
+
+              var inOrder = inOrder(aspect, guardiumApi, exampleEventDataSupplier);
+              inOrder.verify(aspect, times(1)).around(Mockito.any());
+              inOrder.verify(guardiumApi, times(1)).start(Mockito.any(), Mockito.any());
+              inOrder.verify(exampleEventDataSupplier, times(1)).get(Mockito.any(), Mockito.any());
+              inOrder.verify(guardiumApi, times(1)).released();
+            });
   }
 }
