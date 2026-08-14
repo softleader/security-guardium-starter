@@ -26,7 +26,7 @@ import tw.com.softleader.data.jakarta.security.guardium.autoconfigure.SecurityGu
 @JdbcTest
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
 @ImportAutoConfiguration(classes = SecurityGuardiumAutoConfiguration.class)
-class IBMSecurityGuardium10GuardAppEventTestApi {
+class IBMSecurityGuardium10GuardAppEventApiTest {
 
   @Autowired JdbcTemplate template;
   @MockBean ExampleGuardAppEventSupplier exampleEventDataSupplier;
