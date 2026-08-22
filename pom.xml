@@ -4,7 +4,7 @@
 
   <groupId>tw.com.softleader.data.jakarta</groupId>
   <artifactId>security-guardium-starter</artifactId>
-  <version>3.5.16</version>
+  <version>4.0.7</version>
 
   <description>Secure service with IBM Security Guardium</description>
   <inceptionYear>2022</inceptionYear>
@@ -38,14 +38,14 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-    <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
-    <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
+    <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
+    <maven-surefire-plugin.version>3.5.6</maven-surefire-plugin.version>
     <spotless-maven-plugin.version>2.43.0</spotless-maven-plugin.version>
     <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
     <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
     <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
 
-    <spring-boot.version>3.5.16</spring-boot.version>
+    <spring-boot.version>4.0.7</spring-boot.version>
 
     <spring-snapshot.repository>https://repo.spring.io/snapshot</spring-snapshot.repository>
     <spring-milestones.repository>https://repo.spring.io/milestone</spring-milestones.repository>
